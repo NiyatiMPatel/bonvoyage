@@ -6,7 +6,7 @@ import axios, {
   AxiosResponse,
   // AxiosPromise,
 } from "axios";
-const baseUrl = import.meta.env.VITE_REACT_APP_API_URL;
+const baseUrl = import.meta.env.VITE_REACT_APP_API_URL || ""; // WHEN FRONTEND AND BACKEND ARE HOSTED ON SAME SERVER - USE SAME URL FOR ALL THE REQUESTS
 // console.log("devUrl:", baseUrl);
 // Create Axios Instance
 const axiosInstance: AxiosInstance = axios.create({

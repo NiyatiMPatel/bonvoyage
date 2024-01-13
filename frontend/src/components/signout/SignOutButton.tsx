@@ -27,7 +27,7 @@ const SignOutButton = () => {
       onClick={logoutHandler}
       className="text-blue-600 px-3 font-bold bg-white hover:bg-gray-100 "
     >
-      {isPending ? "Logging Out" : "Log Out"}
+      {isPending ? "Signing Out" : "Sign Out"}
     </button>
   );
 };

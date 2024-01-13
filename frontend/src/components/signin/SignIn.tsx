@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { Formik, Field, Form, ErrorMessage, FormikHelpers } from "formik";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import * as apiClient from "../../axios/api-client";
 const SignIn = () => {
@@ -91,7 +91,13 @@ const SignIn = () => {
               />
             </label>
 
-            <span className="inline-block my-2">
+            <div className="flex items-center justify-between my-5">
+              <span className="text-sm">
+                Not Registered?
+                <Link to="/register" className="underline">
+                  Create an account here
+                </Link>
+              </span>
               <button
                 type="submit"
                 className="border rounded flex items-center bg-blue-600 text-white p-2 font-bold hover:bg-blue-500 text-xl"
@@ -99,7 +105,7 @@ const SignIn = () => {
               >
                 {isPending ? "Signing In" : "Sign In"}
               </button>
-            </span>
+            </div>
           </Form>
         )}
       </Formik>

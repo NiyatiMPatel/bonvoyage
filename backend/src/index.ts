@@ -2,6 +2,7 @@ import express from "express"; //{ Request, Response }
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import "dotenv/config";
+import path from "path";
 import { connectToMongo } from "./config/mongoose";
 import routes from "./routes/index";
 
@@ -29,6 +30,9 @@ app.use(
 //     message: "Hello from express endpoint",
 //   });
 // });
+
+// SERVING FILES STATICALLY FOR STATIC FILES ONLY HAS READ ACCESS
+app.use(express.static(path.join(__dirname, "..", "..", "frontend", "dist")));
 
 // APP ROUTES
 app.use("/", routes);
