@@ -18,7 +18,6 @@ const ProtectedRouteWrapper = lazy(
 );
 const ErrorPage = lazy(() => import("./pages/ErrorPage"));
 const HomePage = lazy(() => import("./pages/HomePage"));
-const SearchPage = lazy(() => import("./pages/SearchPage"));
 const RegisterPage = lazy(() => import("./pages/RegisterPage"));
 const SignInPage = lazy(() => import("./pages/SignInPage"));
 const AddHotelPage = lazy(() => import("./pages/AddHotelPage"));

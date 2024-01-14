@@ -1,4 +1,4 @@
-import { Formik, Form, FormikHelpers } from "formik";
+import { Formik, Form } from "formik"; //FormikHelpers
 import * as Yup from "yup";
 
 import DetailsSection from "./DetailsSection";
@@ -84,8 +84,8 @@ const ManageHotelForm = () => {
   });
 
   const submitHandler = async (
-    formData: HotelFormData,
-    { resetForm }: FormikHelpers<HotelFormData>
+    formData: HotelFormData
+    // { resetForm }: FormikHelpers<HotelFormData>
   ) => {
     console.log("ManageHotelForm ~ values:", formData);
     // CREATE NEW FORMDATA OBJECT AND ALL ADD-HOTEL API
