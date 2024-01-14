@@ -50,7 +50,7 @@ export const validateToken = async () => {
     const response = await axiosInstance.get("/api/auth/validate-token", {
       withCredentials: true,
     });
-    console.log("validateToken ~ response:", response);
+    // console.log("validateToken ~ response:", response);
     if (response?.status !== 200) {
       throw new Error("Token invalid");
     }

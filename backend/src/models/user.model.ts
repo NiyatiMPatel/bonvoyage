@@ -1,17 +1,8 @@
 import { Schema, model } from "mongoose";
 import bcrypt from "bcryptjs";
 
-// Define the UserType interface, representing the structure of a user object.
-export type UserType = {
-  _id: string;
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-};
-
 // Create the UserSchema using Mongoose Schema, specifying the data types and constraints.
-const UserSchema = new Schema({
+const UserSchema = new Schema<UserType>({
   email: {
     type: String,
     required: true,

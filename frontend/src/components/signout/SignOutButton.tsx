@@ -6,7 +6,7 @@ const SignOutButton = () => {
   // REACT QUERY ACCESS AT GLOBAL LEVEL
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { data, mutate, isPending } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: apiClient.logout,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["validateToken"] });
@@ -16,7 +16,6 @@ const SignOutButton = () => {
       console.log("Register ~ error:", error);
     },
   });
-  console.log("Header ~ data:", data);
 
   const logoutHandler = async () => {
     mutate();
