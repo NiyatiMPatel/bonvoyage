@@ -3,6 +3,7 @@ import { validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import UserModel from "../models/user.model";
+import path from "path";
 
 // USER LOGIN CONTROLLER
 export const loginController = async (req: Request, res: Response) => {
@@ -81,4 +82,9 @@ export const logoutController = async (req: Request, res: Response) => {
       message: "Something went wrong",
     });
   }
+};
+
+// CATCH ALL ROUTES CONTROLLER
+export const catchAllController = async (req: Request, res: Response) => {
+  res.send(path.join(__dirname, "..", "..", "frontend", "dist", "html"));
 };

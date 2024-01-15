@@ -3,7 +3,6 @@ import HotelModel from "../models/hotel.model";
 
 // CREATE MY HOTELS
 export const createMyHotel = async (req: Request, res: Response) => {
-  // SUBMITTING FORM WITH IMAGES FROM FRONTEND- RECEIVES FORM DATA AS MULTIPART FORM OBJECT AT THE BACKEND
   try {
     // console.log("createMyHotel ~ req.body:", req?.body);
     const newHotel: HotelType = req.body;
