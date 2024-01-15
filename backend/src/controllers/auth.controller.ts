@@ -86,5 +86,5 @@ export const logoutController = async (req: Request, res: Response) => {
 
 // CATCH ALL ROUTES CONTROLLER
 export const catchAllController = async (req: Request, res: Response) => {
-  res.send(path.join(__dirname, "..", "..", "frontend", "dist", "html"));
+  res.send(path.join(__dirname, "..", "..", "frontend", "dist", "index.html"));
 };
