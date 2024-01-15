@@ -1,4 +1,4 @@
-import express from "express"; //{ Request, Response }
+import express, { Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import "dotenv/config";
@@ -36,6 +36,12 @@ app.use(express.static(path.join(__dirname, "..", "..", "frontend", "dist")));
 
 // APP ROUTES
 app.use("/", routes);
+
+app.get("*", (req: Request, res: Response) => {
+  res.sendFile(
+    path.join(__dirname, "..", "..", "frontend", "dist", "index.html")
+  );
+});
 
 app.listen(process.env.PORT, () => {
   console.log("app.listen", `Server running on localhost:${process.env.PORT}`);
