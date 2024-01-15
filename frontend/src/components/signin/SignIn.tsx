@@ -45,7 +45,7 @@ const SignIn = () => {
         validationSchema={validationSchema}
         onSubmit={submitHandler}
       >
-        {({ errors, touched, isSubmitting }) => (
+        {({ errors, touched }) => (
           <Form>
             <label
               htmlFor="email"
@@ -101,7 +101,7 @@ const SignIn = () => {
               <button
                 type="submit"
                 className="border rounded flex items-center bg-blue-600 text-white p-2 font-bold hover:bg-blue-500 text-xl"
-                disabled={isSubmitting}
+                disabled={isPending}
               >
                 {isPending ? "Signing In" : "Sign In"}
               </button>

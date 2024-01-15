@@ -1,17 +1,7 @@
 import express from "express";
-import multer from "multer";
 import { body } from "express-validator";
 import { createMyHotel } from "../controllers/myHotels.controller";
 import verifyToken from "../middleware/auth.middleware";
-
-const storage = multer.memoryStorage();
-const upload = multer({
-  storage: storage,
-  limits: {
-    fieldSize: 5 * 1024 * 1024, //5MB SIZE IN BITS
-  },
-});
-console.log("upload:", upload);
 
 const router = express.Router();
 
@@ -34,7 +24,6 @@ router.post(
       .isArray()
       .withMessage("Facilities are required"),
   ],
-  upload.array("imageFiles", 6),
   createMyHotel
 );
 

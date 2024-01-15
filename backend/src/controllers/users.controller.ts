@@ -25,7 +25,7 @@ export const registerController = async (req: Request, res: Response) => {
     }
 
     user = new UserModel(req.body);
-    await user.save();
+    const savedUser = await user.save();
 
     const token = jwt.sign(
       { userId: user._id },
@@ -39,7 +39,8 @@ export const registerController = async (req: Request, res: Response) => {
     });
 
     // return res.sendStatus(200); //NO RESPONSE BODY AS WE ARE SENDING COOKIE AND IT AUTOMATICALLY GETS SET IN THE BROWSER FOR US. THEREFORE WE DO NOT HAVE TO WRITE ANY CODE ON THE FRONTEND TO HANDLE THIS
-    return res.status(200).send({
+    res.status(200).send({
+      data: savedUser,
       message: "User registered successfully",
     });
   } catch (error) {

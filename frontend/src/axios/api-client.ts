@@ -16,7 +16,7 @@ export const register = async (formData: RegisterFormValuesType) => {
     return response;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      // console.log("register ~ error:", error);
+      console.log("register ~ error:", error);
       Notification.error(error?.response?.data?.message || error?.message);
     }
     throw new Error(error as string | undefined);
@@ -76,6 +76,27 @@ export const logout = async () => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.log("login ~ error:", error);
+      Notification.error(error?.response?.data?.message || error?.message);
+    }
+    throw new Error(error as string | undefined);
+  }
+};
+
+// ADD MY-HOTEL FormData HERE IS THE PREDEFINED TYPE PROVIDED TO HANDLE FORMDATA
+export const addMyHotel = async (formData: HotelFormData) => {
+  try {
+    const response = await axiosInstance.post("/api/my-hotels", formData);
+    // console.log("addMyHotel ~ response:", response);
+
+    if (response?.status !== 201 ?? response?.status !== 200) {
+      Notification.error(response?.data?.message);
+      throw new Error(response?.data);
+    }
+    Notification.success(response?.data?.message);
+    return response;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.log("addMyHotel ~ error:", error);
       Notification.error(error?.response?.data?.message || error?.message);
     }
     throw new Error(error as string | undefined);

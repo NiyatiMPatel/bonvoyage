@@ -1,15 +1,13 @@
-import { Formik, Form } from "formik"; //FormikHelpers
+import { Formik, Form, FormikHelpers } from "formik"; //FormikHelpers
 import * as Yup from "yup";
 
 import DetailsSection from "./DetailsSection";
 import TypeSection from "./TypeSection";
 import FacilitiesSection from "./FacilitiesSection";
 import GuestsSection from "./GuestsSection";
-import ImagesSection from "./ImagesSection";
 
-const ManageHotelForm = () => {
-  const emptyFileList = new DataTransfer().files;
-  console.log("ManageHotelForm ~ emptyFileList:", emptyFileList);
+const ManageHotelForm = ({ data, onSave, isPending }: ManageHotelFormProps) => {
+  console.log("ManageHotelForm ~ data:", data?.data?.data);
   const initialValues: HotelFormData = {
     name: "",
     city: "",
@@ -19,8 +17,6 @@ const ManageHotelForm = () => {
     pricePerNight: 0,
     starRating: 1,
     facilities: [],
-    imageFiles: emptyFileList,
-    imageUrls: [],
     adultCount: 0,
     childCount: 0,
   };
@@ -41,40 +37,6 @@ const ManageHotelForm = () => {
       .of(Yup.string())
       .min(1, "At least one facility is required")
       .required("Facilities are required"),
-
-    // imageFiles: Yup.mixed()
-    //   .test({
-    //     name: "fileCount",
-    //     message: "At least one and at most six images are required",
-    //     test: function (value) {
-    //       if (value instanceof FileList) {
-    //         return value.length > 0 && value.length <= 6;
-    //       }
-    //       return false;
-    //     },
-    //   })
-    //   .required("Image is required")
-    //   .test({
-    //     name: "fileType",
-    //     message: "Invalid file type. Only images are allowed.",
-    //     test: function (value) {
-    //       if (value instanceof FileList) {
-    //         const allowedFileTypes = [
-    //           "image/jpeg",
-    //           "image/png",
-    //           "image/gif",
-    //           "image/bmp",
-    //         ]; // Add more if needed
-    //         for (let i = 0; i < value.length; i++) {
-    //           if (!allowedFileTypes.includes(value[i].type)) {
-    //             return false;
-    //           }
-    //         }
-    //         return true;
-    //       }
-    //       return false;
-    //     },
-    //   }),
     adultCount: Yup.number()
       .min(0, "Number of adults must be a non-negative number")
       .required("Number of adults is required"),
@@ -84,11 +46,12 @@ const ManageHotelForm = () => {
   });
 
   const submitHandler = async (
-    formData: HotelFormData
-    // { resetForm }: FormikHelpers<HotelFormData>
+    formData: HotelFormData,
+    { resetForm }: FormikHelpers<HotelFormData>
   ) => {
-    console.log("ManageHotelForm ~ values:", formData);
-    // CREATE NEW FORMDATA OBJECT AND ALL ADD-HOTEL API
+    // console.log("ManageHotelForm ~ formData:", formData);
+    onSave(formData);
+    Object.keys(data?.data?.data).length > 0 && resetForm();
   };
   return (
     <Formik
@@ -96,21 +59,20 @@ const ManageHotelForm = () => {
       onSubmit={submitHandler}
       validationSchema={validationSchema}
     >
-      {({ isSubmitting }) => (
+      {() => (
         <Form>
           {/* Add other sections as needed */}
           <DetailsSection />
           <TypeSection />
           <FacilitiesSection />
           <GuestsSection />
-          <ImagesSection />
           <span className="flex justify-end my-2">
             <button
-              // disabled={isSubmitting}
+              disabled={isPending}
               type="submit"
               className="bg-blue-600 text-white p-2 font-bold hover:bg-blue-500 text-xl disabled:bg-gray-500"
             >
-              {isSubmitting ? "Saving..." : "Save"}
+              {isPending ? "Saving..." : "Save"}
             </button>
           </span>
         </Form>

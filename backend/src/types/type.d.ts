@@ -21,21 +21,5 @@ type HotelType = {
   facilities: string[];
   pricePerNight: number;
   starRating: number;
-  imageUrls: string[];
   lastUpdated: Date;
-  // bookings: BookingType[];
-};
-
-// Define the BookingType interface, representing the structure of a booking object.
-type BookingType = {
-  _id: string;
-  userId: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  adultCount: number;
-  childCount: number;
-  checkIn: Date;
-  checkOut: Date;
-  totalCost: number;
 };

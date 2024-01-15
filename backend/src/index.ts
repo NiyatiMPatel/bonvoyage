@@ -4,11 +4,8 @@ import cors from "cors";
 import "dotenv/config";
 import path from "path";
 import { connectToMongo } from "./config/mongoose";
-import { cloudinaryConnect } from "./config/cloudinary";
 import routes from "./routes/index";
 
-// CONNECT TO CLOUDINARY
-cloudinaryConnect();
 // CONNECT TO MONGODB DATABASE
 connectToMongo();
 // CREATE NEW EXPRESS APP

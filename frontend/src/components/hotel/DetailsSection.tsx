@@ -120,8 +120,8 @@ const DetailsSection = () => {
         >
           {[1, 2, 3, 4, 5].map((option) => {
             return (
-              <option key={option} value={option}>
-                {option}
+              <option key={+option} value={+option}>
+                {+option}
               </option>
             );
           })}

@@ -16,6 +16,7 @@ const Register = () => {
       console.log("Register ~ error:", error);
     },
   });
+  console.log("Register ~ data:", data?.data?.data);
 
   // FORMIK INITIAL VALUES DEFINITION
   const initialValues: RegisterFormValuesType = {
@@ -46,7 +47,7 @@ const Register = () => {
   ) => {
     console.log("Register ~ values:", values);
     mutate(values);
-    !!data && resetForm();
+    Object.keys(data?.data?.data).length > 0 && resetForm();
   };
   return (
     <div className="flex flex-col gap-5">
@@ -56,7 +57,7 @@ const Register = () => {
         validationSchema={validationSchema}
         onSubmit={submitHandler}
       >
-        {({ errors, touched, isSubmitting }) => (
+        {({ errors, touched }) => (
           <Form>
             <div className="flex flex-col md:flex-row gap-5">
               <label
@@ -174,7 +175,7 @@ const Register = () => {
               <button
                 type="submit"
                 className="border rounded flex items-center bg-blue-600 text-white p-2 font-bold hover:bg-blue-500 text-xl"
-                disabled={isSubmitting}
+                disabled={isPending}
               >
                 {isPending ? "Creating Account" : "Create Account"}
               </button>

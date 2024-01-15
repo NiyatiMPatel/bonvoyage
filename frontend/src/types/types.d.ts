@@ -24,13 +24,12 @@ type HotelFormData = {
   pricePerNight: number;
   starRating: number;
   facilities: string[];
-  imageFiles: FileList;
-  imageUrls: string[];
   adultCount: number;
   childCount: number;
 };
 
-type ErrorTouchProps = {
-  errors: any;
-  touched: any;
+type ManageHotelFormProps = {
+  data: any;
+  onSave: (hotelFormData: HotelFormData) => void;
+  isPending: boolean;
 };

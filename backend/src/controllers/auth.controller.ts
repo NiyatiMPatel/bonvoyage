@@ -44,7 +44,7 @@ export const loginController = async (req: Request, res: Response) => {
       maxAge: 86400000, //same as expiresIn but in milliseconds
     });
 
-    res.status(200).json({ userId: user._id, message: "Login Successful" });
+    res.status(200).send({ userId: user._id, message: "Login Successful" });
   } catch (error) {
     console.log("loginController ~ error:", error);
     res.status(500).send({
@@ -72,7 +72,7 @@ export const logoutController = async (req: Request, res: Response) => {
     res.cookie("auth_token", "", {
       expires: new Date(0), //token expires now immidiately
     });
-    res.status(200).json({
+    res.status(200).send({
       message: "Logout Successful",
     });
   } catch (error) {
