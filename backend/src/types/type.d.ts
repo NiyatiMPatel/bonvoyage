@@ -21,5 +21,6 @@ type HotelType = {
   facilities: string[];
   pricePerNight: number;
   starRating: number;
+  imageUrls: string[];
   lastUpdated: Date;
 };

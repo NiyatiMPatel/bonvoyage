@@ -1,6 +1,9 @@
 import express from "express";
 import { body } from "express-validator";
-import { createMyHotel } from "../controllers/myHotels.controller";
+import {
+  createMyHotel,
+  readMyHotels,
+} from "../controllers/myHotels.controller";
 import verifyToken from "../middleware/auth.middleware";
 
 const router = express.Router();
@@ -26,5 +29,8 @@ router.post(
   ],
   createMyHotel
 );
+
+// GET ALL MY HOTEL
+router.get("/", verifyToken, readMyHotels);
 
 export default router;

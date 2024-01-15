@@ -3,7 +3,6 @@ import { validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import UserModel from "../models/user.model";
-import path from "path";
 
 // USER LOGIN CONTROLLER
 export const loginController = async (req: Request, res: Response) => {

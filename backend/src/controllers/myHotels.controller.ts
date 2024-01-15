@@ -18,7 +18,24 @@ export const createMyHotel = async (req: Request, res: Response) => {
       message: "Created new hotel Successfully",
     });
   } catch (error) {
-    console.log("createMyHotel ~ error:", error);
+    console.log("Error creating hotels");
+    res.status(500).send({
+      message: error,
+    });
+  }
+};
+
+// GET ALL MY HOTELS
+
+export const readMyHotels = async (req: Request, res: Response) => {
+  try {
+    const hotels = await HotelModel.find({ userId: req.userId });
+    res.status(200).send({
+      data: hotels,
+      message: "Hotels fetched Successfully",
+    });
+  } catch (error) {
+    console.log("Error fetching hotels");
     res.status(500).send({
       message: error,
     });

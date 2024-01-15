@@ -21,6 +21,8 @@ const HomePage = lazy(() => import("./pages/HomePage"));
 const RegisterPage = lazy(() => import("./pages/RegisterPage"));
 const SignInPage = lazy(() => import("./pages/SignInPage"));
 const AddHotelPage = lazy(() => import("./pages/AddHotelPage"));
+const MyHotelsPage = lazy(() => import("./pages/MyHotelsPage"));
+const EditHotelPage = lazy(() => import("./pages/EditHotelPage"));
 
 let router = createBrowserRouter([
   {
@@ -48,6 +50,24 @@ let router = createBrowserRouter([
         element: (
           <ProtectedRouteWrapper>
             <AddHotelPage />
+          </ProtectedRouteWrapper>
+        ),
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "my-hotels",
+        element: (
+          <ProtectedRouteWrapper>
+            <MyHotelsPage />
+          </ProtectedRouteWrapper>
+        ),
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: `edit-hotel/:hotelId`,
+        element: (
+          <ProtectedRouteWrapper>
+            <EditHotelPage />
           </ProtectedRouteWrapper>
         ),
         errorElement: <ErrorPage />,

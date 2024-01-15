@@ -8,7 +8,7 @@ export default {
     extend: {},
     container: {
       padding: {
-        md: "10rem" // only for screens md and greater
+        lg: "10rem" // only for screens md and greater
       }
     }
   },

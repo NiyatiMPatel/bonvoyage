@@ -82,7 +82,7 @@ export const logout = async () => {
   }
 };
 
-// ADD MY-HOTEL FormData HERE IS THE PREDEFINED TYPE PROVIDED TO HANDLE FORMDATA
+// ADD MY-HOTEL
 export const addMyHotel = async (formData: HotelFormData) => {
   try {
     const response = await axiosInstance.post("/api/my-hotels", formData);
@@ -97,6 +97,27 @@ export const addMyHotel = async (formData: HotelFormData) => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.log("addMyHotel ~ error:", error);
+      Notification.error(error?.response?.data?.message || error?.message);
+    }
+    throw new Error(error as string | undefined);
+  }
+};
+
+// GET ALL MY-HOTELS
+export const getMyHotels = async (): Promise<HotelType[]> => {
+  try {
+    const response = await axiosInstance.get("/api/my-hotels");
+    // console.log("getMyHotels ~ response:", response);
+
+    if (response?.status !== 200) {
+      Notification.error(response?.data?.message);
+      throw new Error(response?.data);
+    }
+    Notification.success(response?.data?.message);
+    return response?.data?.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.log("getMyHotels ~ error:", error);
       Notification.error(error?.response?.data?.message || error?.message);
     }
     throw new Error(error as string | undefined);
