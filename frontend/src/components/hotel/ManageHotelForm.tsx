@@ -1,4 +1,4 @@
-import { Formik, Form, FormikHelpers } from "formik"; //FormikHelpers
+import { Formik, Form } from "formik"; //FormikHelpers
 import * as Yup from "yup";
 
 import DetailsSection from "./DetailsSection";
@@ -7,8 +7,12 @@ import FacilitiesSection from "./FacilitiesSection";
 import GuestsSection from "./GuestsSection";
 import ImagesSection from "./ImagesSection";
 
-const ManageHotelForm = ({ data, onSave, isPending }: ManageHotelFormProps) => {
-  console.log("ManageHotelForm ~ data:", data?.data?.data);
+const ManageHotelForm = ({ onSave, isPending }: ManageHotelFormProps) => {
+  // console.log("ManageHotelForm ~ data:", data?.data?.data);
+  // console.log(
+  //   "ManageHotelForm ~ Object.keys(data?.data?.data).length:",
+  //   Object.keys(data?.data?.data).length
+  // );
   const initialValues: HotelFormData = {
     name: "",
     city: "",
@@ -57,10 +61,7 @@ const ManageHotelForm = ({ data, onSave, isPending }: ManageHotelFormProps) => {
       .required("Images are required"),
   });
 
-  const submitHandler = async (
-    formDataJson: HotelFormData,
-    { resetForm }: FormikHelpers<HotelFormData>
-  ) => {
+  const submitHandler = async (formDataJson: HotelFormData) => {
     const formData = new FormData();
 
     formData.append("name", formDataJson.name);
@@ -87,7 +88,6 @@ const ManageHotelForm = ({ data, onSave, isPending }: ManageHotelFormProps) => {
     console.log("ManageHotelForm ~ formData:", formData);
 
     onSave(formData);
-    Object.keys(data?.data?.data).length > 0 && resetForm();
   };
   return (
     <Formik

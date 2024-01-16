@@ -26,8 +26,6 @@ type HotelFormData = {
 };
 
 type ManageHotelFormProps = {
-  data: any;
-  // onSave: (hotelFormData: HotelFormData) => void;
   onSave: (hotelFormData: FormData) => void;
   isPending: boolean;
 };

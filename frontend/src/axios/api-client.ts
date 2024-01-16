@@ -115,7 +115,7 @@ export const getMyHotels = async (): Promise<HotelType[]> => {
       Notification.error(response?.data?.message);
       throw new Error(response?.data);
     }
-    Notification.success(response?.data?.message);
+    // Notification.success(response?.data?.message);
     return response?.data?.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
