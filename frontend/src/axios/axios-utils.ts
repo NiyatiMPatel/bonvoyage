@@ -14,7 +14,7 @@ const axiosInstance: AxiosInstance = axios.create({
   // to set browser cookie
   withCredentials: true,
   headers: {
-    "Content-Type": "application/json",
+    "Content-Type": "multipart/form-data",
     Accept: "application/json",
   } as AxiosRequestHeaders,
 });

@@ -27,7 +27,7 @@ export const register = async (formData: RegisterFormValuesType) => {
 export const login = async (formData: SignInFromValueType) => {
   try {
     const response = await axiosInstance.post("/api/auth/login", formData);
-    console.log("login ~ response:", response);
+    // console.log("login ~ response:", response);
 
     if (response?.status !== 200) {
       Notification.error(response?.data?.message);
@@ -83,7 +83,9 @@ export const logout = async () => {
 };
 
 // ADD MY-HOTEL
-export const addMyHotel = async (formData: HotelFormData) => {
+// export const addMyHotel = async (formData: HotelFormData) => {
+export const addMyHotel = async (formData: FormData) => {
+  console.log("addMyHotel ~ formData:", formData);
   try {
     const response = await axiosInstance.post("/api/my-hotels", formData);
     // console.log("addMyHotel ~ response:", response);

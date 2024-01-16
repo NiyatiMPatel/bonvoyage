@@ -1,7 +1,3 @@
-type ChildrenProp = {
-  children: ReactNode;
-};
-
 type RegisterFormValuesType = {
   firstName: string;
   lastName: string;
@@ -26,11 +22,13 @@ type HotelFormData = {
   facilities: string[];
   adultCount: number;
   childCount: number;
+  imageFiles: FileList;
 };
 
 type ManageHotelFormProps = {
   data: any;
-  onSave: (hotelFormData: HotelFormData) => void;
+  // onSave: (hotelFormData: HotelFormData) => void;
+  onSave: (hotelFormData: FormData) => void;
   isPending: boolean;
 };
 

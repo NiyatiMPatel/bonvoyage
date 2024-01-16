@@ -3,9 +3,12 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import "dotenv/config";
 import path from "path";
+import { cloudinaryConnect } from "./config/cloudinary";
 import { connectToMongo } from "./config/mongoose";
 import routes from "./routes/index";
 
+// CONNECT TO CLOUDINARY
+cloudinaryConnect();
 // CONNECT TO MONGODB DATABASE
 connectToMongo();
 // CREATE NEW EXPRESS APP

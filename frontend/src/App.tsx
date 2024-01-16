@@ -41,36 +41,24 @@ let router = createBrowserRouter([
         errorElement: <ErrorPage />,
       },
       {
-        path: "sign-in",
-        element: <SignInPage />,
-        errorElement: <ErrorPage />,
-      },
-      {
-        path: "add-hotel",
-        element: (
-          <ProtectedRouteWrapper>
-            <AddHotelPage />
-          </ProtectedRouteWrapper>
-        ),
-        errorElement: <ErrorPage />,
-      },
-      {
-        path: "my-hotels",
-        element: (
-          <ProtectedRouteWrapper>
-            <MyHotelsPage />
-          </ProtectedRouteWrapper>
-        ),
-        errorElement: <ErrorPage />,
-      },
-      {
-        path: `edit-hotel/:hotelId`,
-        element: (
-          <ProtectedRouteWrapper>
-            <EditHotelPage />
-          </ProtectedRouteWrapper>
-        ),
-        errorElement: <ErrorPage />,
+        element: <ProtectedRouteWrapper />,
+        children: [
+          {
+            path: "add-hotel",
+            element: <AddHotelPage />,
+            errorElement: <ErrorPage />,
+          },
+          {
+            path: "my-hotels",
+            element: <MyHotelsPage />,
+            errorElement: <ErrorPage />,
+          },
+          {
+            path: `edit-hotel/:hotelId`,
+            element: <EditHotelPage />,
+            errorElement: <ErrorPage />,
+          },
+        ],
       },
     ],
   },

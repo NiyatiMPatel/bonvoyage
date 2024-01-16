@@ -13,7 +13,10 @@ const AddHotelPage = () => {
     },
   });
   // FormData HERE IS THE PREDEFINED TYPE PROVIDED TO HANDLE FORMDATA
-  const saveHandler = (hotelFormData: HotelFormData) => {
+  // const saveHandler = (hotelFormData: HotelFormData) => {
+  //   mutate(hotelFormData);
+  // };
+  const saveHandler = (hotelFormData: FormData) => {
     mutate(hotelFormData);
   };
 

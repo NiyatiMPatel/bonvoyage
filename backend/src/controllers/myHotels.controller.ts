@@ -1,18 +1,28 @@
 import { Request, Response } from "express";
+import cloudinary from "cloudinary";
 import HotelModel from "../models/hotel.model";
 
 // CREATE MY HOTELS
 export const createMyHotel = async (req: Request, res: Response) => {
   try {
+    // console.log("createMyHotel ~ req.files:", req.files);
     // console.log("createMyHotel ~ req.body:", req?.body);
+
+    const reqImageFiles = req.files as Express.Multer.File[];
+    // console.log("createMyHotel ~ reqImageFiles:", reqImageFiles);
+
     const newHotel: HotelType = req.body;
 
+    //  1. UPLOAD IMAGES TO CLOUDINARY
+    const imageUrls = await uploadImages(reqImageFiles);
+    // 2. IF UPLOAD WAS SUCCESSFUL, ADD URLS TO NEW HOTEL
+    newHotel.imageUrls = imageUrls;
     newHotel.lastUpdated = new Date();
     newHotel.userId = req.userId;
-
+    // 3. SAVE NEW HOTEL IN DATABASE
     const hotel = new HotelModel(newHotel);
     const savedHotel = await hotel.save();
-    // 4. RETURN 201 STATUS
+    // RETURN 201 RESPONSE
     res.status(201).send({
       data: savedHotel,
       message: "Created new hotel Successfully",
@@ -41,3 +51,16 @@ export const readMyHotels = async (req: Request, res: Response) => {
     });
   }
 };
+
+// HEPLER FUNCTION FOR IMAGE UPLOAD
+async function uploadImages(imageFiles: Express.Multer.File[]) {
+  const uploadPromises = imageFiles?.map(async (image) => {
+    const b64 = Buffer.from(image.buffer).toString("base64");
+    let dataURI = "data:" + image.mimetype + ";base64," + b64;
+    const res = await cloudinary.v2.uploader.upload(dataURI);
+    return res.url;
+  });
+
+  const imageUrls = await Promise.all(uploadPromises);
+  return imageUrls;
+}

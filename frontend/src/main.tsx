@@ -10,7 +10,11 @@ import "./index.css";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      retry: 0, // IF ERROR, REACT-QUERY RETRIES AUTOMATICALLY. USEFUL WHEN SERVER GOES DOWN FOR A WHILE AND IS ACTIVE AGAIN AFTER SOMETIME. BUT DO NOT NEED THAT HERE THEREFORE 0
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      retry: false,
+      staleTime: 1000 * 60 * 60 * 24, //24HoursInMs
     },
   },
 });
