@@ -125,3 +125,24 @@ export const getMyHotels = async (): Promise<HotelType[]> => {
     throw new Error(error as string | undefined);
   }
 };
+
+// GET SINGLE HOTEL
+export const getMyHotelById = async (hotelId: string): Promise<HotelType> => {
+  try {
+    const response = await axiosInstance.get(`/api/my-hotels/${hotelId}`);
+    // console.log("getMyHotelById ~ response:", response);
+
+    if (response?.status !== 200) {
+      Notification.error(response?.data?.message);
+      throw new Error(response?.data);
+    }
+    // Notification.success(response?.data?.message);
+    return response?.data?.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.log("getMyHotelById ~ error:", error);
+      Notification.error(error?.response?.data?.message || error?.message);
+    }
+    throw new Error(error as string | undefined);
+  }
+};

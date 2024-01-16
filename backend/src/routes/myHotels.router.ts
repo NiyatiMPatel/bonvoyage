@@ -2,6 +2,7 @@ import express from "express";
 import { body } from "express-validator";
 import {
   createMyHotel,
+  readMyHotel,
   readMyHotels,
 } from "../controllers/myHotels.controller";
 import verifyToken from "../middleware/auth.middleware";
@@ -42,5 +43,8 @@ router.post(
 
 // GET ALL MY HOTEL
 router.get("/", verifyToken, readMyHotels);
+
+// GET SINGLE HOTEL
+router.get("/:id", verifyToken, readMyHotel);
 
 export default router;

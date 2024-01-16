@@ -23,15 +23,10 @@ type HotelFormData = {
   adultCount: number;
   childCount: number;
   imageFiles: FileList;
-};
-
-type ManageHotelFormProps = {
-  onSave: (hotelFormData: FormData) => void;
-  isPending: boolean;
+  imageUrls: string[];
 };
 
 type HotelType = {
-  _id: string;
   userId: string;
   name: string;
   city: string;
@@ -45,4 +40,10 @@ type HotelType = {
   starRating: number;
   imageUrls: string[];
   lastUpdated: Date;
+};
+
+type ManageHotelFormProps = {
+  onSave: (hotelFormData: FormData) => void;
+  isPending: boolean;
+  hotel: HotelType;
 };

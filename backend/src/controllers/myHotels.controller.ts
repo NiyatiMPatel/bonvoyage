@@ -9,7 +9,6 @@ export const createMyHotel = async (req: Request, res: Response) => {
     // console.log("createMyHotel ~ req.body:", req?.body);
 
     const reqImageFiles = req.files as Express.Multer.File[];
-    // console.log("createMyHotel ~ reqImageFiles:", reqImageFiles);
 
     const newHotel: HotelType = req.body;
 
@@ -46,6 +45,27 @@ export const readMyHotels = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.log("Error fetching hotels");
+    res.status(500).send({
+      message: error,
+    });
+  }
+};
+
+// GET SINGLE HOTEL
+export const readMyHotel = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id.toString();
+    const userId = req.userId;
+    const hotel = await HotelModel.findById({
+      _id: id,
+      userId: userId,
+    });
+    res.status(200).send({
+      data: hotel,
+      message: "Hotel fetched Successfully",
+    });
+  } catch (error) {
+    console.log("Error fetching hotel");
     res.status(500).send({
       message: error,
     });
