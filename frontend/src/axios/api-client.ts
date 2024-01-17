@@ -83,9 +83,7 @@ export const logout = async () => {
 };
 
 // ADD MY-HOTEL
-// export const addMyHotel = async (formData: HotelFormData) => {
 export const addMyHotel = async (formData: FormData) => {
-  console.log("addMyHotel ~ formData:", formData);
   try {
     const response = await axiosInstance.post("/api/my-hotels", formData);
     // console.log("addMyHotel ~ response:", response);
@@ -141,6 +139,30 @@ export const getMyHotelById = async (hotelId: string): Promise<HotelType> => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.log("getMyHotelById ~ error:", error);
+      Notification.error(error?.response?.data?.message || error?.message);
+    }
+    throw new Error(error as string | undefined);
+  }
+};
+
+// UPDATE SINGLE HOTEL
+export const updateMyHotel = async (formData: FormData) => {
+  try {
+    const response = await axiosInstance.put(
+      `/api/my-hotels/${formData.get("hotelId")}`,
+      formData
+    );
+    // console.log("updateMyHotel ~ response:", response);
+
+    if (response?.status !== 201 ?? response?.status !== 200) {
+      Notification.error(response?.data?.message);
+      throw new Error(response?.data);
+    }
+    Notification.success(response?.data?.message);
+    return response;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.log("updateMyHotel ~ error:", error);
       Notification.error(error?.response?.data?.message || error?.message);
     }
     throw new Error(error as string | undefined);

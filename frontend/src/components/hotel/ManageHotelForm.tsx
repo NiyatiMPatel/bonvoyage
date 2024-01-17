@@ -7,24 +7,27 @@ import FacilitiesSection from "./FacilitiesSection";
 import GuestsSection from "./GuestsSection";
 import ImagesSection from "./ImagesSection";
 
-const ManageHotelForm = ({ onSave, isPending }: ManageHotelFormProps) => {
-  // console.log("ManageHotelForm ~ data:", data?.data?.data);
-  // console.log(
-  //   "ManageHotelForm ~ Object.keys(data?.data?.data).length:",
-  //   Object.keys(data?.data?.data).length
+const ManageHotelForm = ({
+  onSave,
+  isPending,
+  hotel,
+}: ManageHotelFormProps) => {
+  // console.log("hotel:", hotel);
+
   // );
   const initialValues: HotelFormData = {
-    name: "",
-    city: "",
-    country: "",
-    description: "",
-    type: "",
-    pricePerNight: 0,
-    starRating: 1,
-    facilities: [],
-    adultCount: 0,
-    childCount: 0,
+    name: hotel?.name || "",
+    city: hotel?.city || "",
+    country: hotel?.country || "",
+    description: hotel?.description || "",
+    type: hotel?.type || "",
+    pricePerNight: hotel?.pricePerNight || 0,
+    starRating: hotel?.starRating || 1,
+    facilities: hotel?.facilities || [],
+    adultCount: hotel?.adultCount || 0,
+    childCount: hotel?.childCount || 0,
     imageFiles: {} as FileList,
+    imageUrls: hotel?.imageUrls || [],
   };
   const validationSchema = Yup.object({
     name: Yup.string().required("Name is required"),
@@ -53,10 +56,10 @@ const ManageHotelForm = ({ onSave, isPending }: ManageHotelFormProps) => {
       .test(
         "Image length",
         "Please select at least 1 and up to 6 images",
-        (value) =>
-          value instanceof FileList &&
-          Object.keys(value).length > 0 &&
-          Object.keys(value).length <= 6
+        (value: any) =>
+          // value instanceof FileList &&
+          Object.keys(value).length + ((hotel!?.imageUrls).length || 0) > 0 &&
+          Object.keys(value).length + ((hotel!?.imageUrls).length || 0) <= 6
       )
       .required("Images are required"),
   });
@@ -64,6 +67,11 @@ const ManageHotelForm = ({ onSave, isPending }: ManageHotelFormProps) => {
   const submitHandler = async (formDataJson: HotelFormData) => {
     const formData = new FormData();
 
+    // EDIT FORM MODE
+    if (hotel) {
+      formData.append("hotelId", hotel._id);
+    }
+    // GENERAL JSON TO FORMDATA
     formData.append("name", formDataJson.name);
     formData.append("city", formDataJson.city);
     formData.append("country", formDataJson.country);
@@ -78,14 +86,17 @@ const ManageHotelForm = ({ onSave, isPending }: ManageHotelFormProps) => {
       formData.append(`facilities[${index}]`, facility);
     });
 
+    // EDIT FORM MODE - NEED TO APPEND IMAGEURL
+    if (formDataJson.imageUrls) {
+      formDataJson.imageUrls.forEach((url, index) => {
+        formData.append(`imageUrls[${index}]`, url);
+      });
+    }
+
     Array.from(formDataJson.imageFiles).forEach((imageFile) => {
       console.log("formDataJson.imageFiles.forEach ~ imageFile:", imageFile);
       formData.append(`imageFiles`, imageFile);
     });
-
-    console.log("ManageHotelForm ~ formDataJson:", formDataJson);
-
-    console.log("ManageHotelForm ~ formData:", formData);
 
     onSave(formData);
   };
@@ -94,11 +105,17 @@ const ManageHotelForm = ({ onSave, isPending }: ManageHotelFormProps) => {
       initialValues={initialValues}
       onSubmit={submitHandler}
       validationSchema={validationSchema}
+      enableReinitialize={true}
     >
       {() => (
         <Form encType="multipart/form-data">
           {/* Add other sections as needed */}
-          <DetailsSection />
+          <div className="flex flex-col gap-4">
+            <h1 className="text-3xl font-bold mb-3">
+              {hotel ? "Edit Hotel" : "Add Hotel"}
+            </h1>
+            <DetailsSection />
+          </div>
           <TypeSection />
           <FacilitiesSection />
           <GuestsSection />

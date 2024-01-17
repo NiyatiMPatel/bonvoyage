@@ -27,6 +27,7 @@ type HotelFormData = {
 };
 
 type HotelType = {
+  _id: string;
   userId: string;
   name: string;
   city: string;
@@ -45,5 +46,5 @@ type HotelType = {
 type ManageHotelFormProps = {
   onSave: (hotelFormData: FormData) => void;
   isPending: boolean;
-  hotel: HotelType;
+  hotel?: HotelType;
 };

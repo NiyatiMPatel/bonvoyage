@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import * as apiClient from "../axios/api-client";
 import ManageHotelForm from "../components/hotel/ManageHotelForm";
 
@@ -10,8 +10,26 @@ const EditHotelPage = () => {
     queryKey: ["fetchMyHotelById", hotelId],
     queryFn: () => apiClient.getMyHotelById(hotelId!),
   });
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: apiClient.updateMyHotel,
+    onSuccess: () => {
+      //  navigate("/my-hotels");
+    },
+    onError: (error: Error) => {
+      console.log("Register ~ error:", error);
+    },
+  });
+
+  // FormData HERE IS THE PREDEFINED TYPE PROVIDED TO HANDLE FORMDATA
+  const saveHandler = (hotelFormData: FormData) => {
+    mutate(hotelFormData);
+  };
+
   // console.log("EditHotelPage ~ data:", data);
-  return <ManageHotelForm hotel={data!} />;
+  return (
+    <ManageHotelForm hotel={data} onSave={saveHandler} isPending={isPending} />
+  );
 };
 
 export default EditHotelPage;

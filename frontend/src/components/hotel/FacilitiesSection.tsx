@@ -1,7 +1,9 @@
-import { ErrorMessage, Field } from "formik";
+import { ErrorMessage, Field, useField } from "formik";
 import { hotelFacilities } from "../../dummy/hotelOptions";
 
-const FacilitiesSection = ({}) => {
+const FacilitiesSection = () => {
+  const [field] = useField("facilities");
+  const selectedValue = field.value;
   return (
     <>
       <h2 className="text-2xl font-bold mb-3">Facilities</h2>
@@ -17,6 +19,7 @@ const FacilitiesSection = ({}) => {
               name="facilities"
               id={facility}
               value={facility}
+              checked={selectedValue.includes(facility)}
             />
             {facility}
           </label>

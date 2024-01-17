@@ -3,8 +3,9 @@ import { ErrorMessage, Field, useFormikContext } from "formik";
 const DetailsSection = () => {
   const { errors, touched } = useFormikContext<HotelFormData>();
   return (
-    <div className="flex flex-col gap-4">
-      <h1 className="text-3xl font-bold mb-3">Add Hotel</h1>
+    // <div className="flex flex-col gap-4">
+    //   <h1 className="text-3xl font-bold mb-3">Add Hotel</h1>
+    <>
       <label htmlFor="name" className="text-gray-700 text-sm font-bold flex-1">
         Name
         <Field
@@ -132,7 +133,8 @@ const DetailsSection = () => {
           component="div"
         />
       </label>
-    </div>
+    </>
+    // </div
   );
 };
 

@@ -4,6 +4,7 @@ import {
   createMyHotel,
   readMyHotel,
   readMyHotels,
+  updateMyHotel,
 } from "../controllers/myHotels.controller";
 import verifyToken from "../middleware/auth.middleware";
 import multer from "multer";
@@ -46,5 +47,8 @@ router.get("/", verifyToken, readMyHotels);
 
 // GET SINGLE HOTEL
 router.get("/:id", verifyToken, readMyHotel);
+
+// UPDATE SINGLE HOTEL
+router.put("/:id", verifyToken, upload.array("imageFiles"), updateMyHotel);
 
 export default router;

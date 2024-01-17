@@ -24,7 +24,7 @@ const TypeSection = () => {
               name="type"
               value={type}
               className="hidden"
-              checked={field.value === type}
+              checked={selectedValue === type}
               onChange={() =>
                 field.onChange({ target: { value: type, name: "type" } })
               }
