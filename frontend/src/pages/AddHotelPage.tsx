@@ -1,14 +1,14 @@
 import { useMutation } from "@tanstack/react-query";
 import ManageHotelForm from "../components/hotel/ManageHotelForm";
 import * as apiClient from "../axios/api-client";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const AddHotelPage = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { mutate, isPending } = useMutation({
     mutationFn: apiClient.addMyHotel,
     onSuccess: () => {
-      navigate("/my-hotels");
+      // navigate("/my-hotels");
     },
     onError: (error: Error) => {
       console.log("Register ~ error:", error);

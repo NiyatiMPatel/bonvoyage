@@ -56,10 +56,22 @@ const ManageHotelForm = ({
       .test(
         "Image length",
         "Please select at least 1 and up to 6 images",
-        (value: any) =>
-          // value instanceof FileList &&
-          Object.keys(value).length + ((hotel!?.imageUrls).length || 0) > 0 &&
-          Object.keys(value).length + ((hotel!?.imageUrls).length || 0) <= 6
+        (value: any) => {
+          if (hotel) {
+            return (
+              value instanceof FileList &&
+              Object.keys(value).length + ((hotel!?.imageUrls).length || 0) >
+                0 &&
+              Object.keys(value).length + ((hotel!?.imageUrls).length || 0) <= 6
+            );
+          } else {
+            return (
+              value instanceof FileList &&
+              Object.keys(value).length > 0 &&
+              Object.keys(value).length <= 6
+            );
+          }
+        }
       )
       .required("Images are required"),
   });

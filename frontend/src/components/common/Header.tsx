@@ -3,9 +3,7 @@ import { useAppSelector } from "../../redux/hooks";
 import SignOutButton from "../signout/SignOutButton";
 
 const Header = () => {
-  const { isLoggedIn } = useAppSelector(
-    (state) => state?.user as { isLoggedIn: boolean }
-  );
+  const isLoggedIn = useAppSelector((state) => state?.user.isLoggedIn);
 
   return (
     <div className="bg-blue-800 py-6">

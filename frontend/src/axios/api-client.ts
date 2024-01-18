@@ -168,3 +168,35 @@ export const updateMyHotel = async (formData: FormData) => {
     throw new Error(error as string | undefined);
   }
 };
+
+// GET HOTELS BASED ON SEARCH
+export const searchHotels = async (
+  searchQueryParams: SearchQueryParams
+): Promise<HotelSearchResponse> => {
+  try {
+    const queryParams = new URLSearchParams(); // predefined object
+    queryParams.append("destination", searchQueryParams.destination || "");
+    queryParams.append("checkIn", searchQueryParams.checkIn || "");
+    queryParams.append("checkOut", searchQueryParams.checkOut || "");
+    queryParams.append("adultCount", searchQueryParams.adultCount || "");
+    queryParams.append("childCount", searchQueryParams.childCount || "");
+    queryParams.append("page", searchQueryParams.page || "");
+
+    const response = await axiosInstance.get(
+      `/api/hotels/search?${queryParams}`
+    );
+    if (response?.status !== 200) {
+      Notification.error(response?.data?.message);
+      throw new Error(response?.data);
+    }
+    // Notification.success(response?.data?.message);
+    // console.log("searchHotels ~ response:", response?.data?.data);
+    return response?.data?.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.log("searchHotels ~ error:", error);
+      Notification.error(error?.response?.data?.message || error?.message);
+    }
+    throw new Error(error as string | undefined);
+  }
+};

@@ -1,4 +1,4 @@
-// Define the UserType interface, representing the structure of a user object.
+// Define the UserType type, representing the structure of a user object.
 type UserType = {
   _id: string;
   email: string;
@@ -7,7 +7,7 @@ type UserType = {
   lastName: string;
 };
 
-// Define the HotelType interface, representing the structure of a hotel object.
+// Define the HotelType type, representing the structure of a hotel object.
 type HotelType = {
   _id: string;
   userId: string;
@@ -23,4 +23,15 @@ type HotelType = {
   starRating: number;
   imageUrls: string[];
   lastUpdated: Date;
+};
+
+// Define the paginated Hote response type, representing the structure of paginated search result
+
+type HotelSearchResponse = {
+  data: HotelType[];
+  pagination: {
+    total: number;
+    currentPage: number;
+    totalPages: number;
+  };
 };

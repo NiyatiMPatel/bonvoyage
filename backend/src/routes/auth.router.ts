@@ -20,10 +20,11 @@ router.post(
   ],
   loginController
 );
-export default router;
 
 // COOKIE TOKEN VALIDATION ROUTE/ENDPOINT - THIS TAKES HTTP COOKIE, TAKES TOKEN FROM IT AND CHECKS IF IT IS VALID - THIS WILL HELP TO IDENTIFY IF THE USER IS LOGGED IN OR NOT AT THE FRONTEND
 router.get("/validate-token", verifyToken, verifyTokenController);
 
 // USER LOGOUT ROUTE/ENDPOINT
 router.post("/logout", logoutController);
+
+export default router;
