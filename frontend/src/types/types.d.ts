@@ -82,6 +82,14 @@ type SearchQueryParams = {
   sortOption?: string;
 };
 
+// GUEST BOOK NOW FORM DATA
+type GuestBookNowFormData = {
+  checkIn: Date;
+  checkOut: Date;
+  adultCount: number;
+  childCount: number;
+};
+
 // MANAGE HOTEL FORM PROPS DATA
 type ManageHotelFormProps = {
   onSave: (hotelFormData: FormData) => void;
@@ -112,4 +120,10 @@ type FSTProps = {
 type PriceProps = {
   selectedPrice?: number;
   onChange: (value?: number) => void;
+};
+
+// BOOK NOW FORM PROPS
+type BookNowProps = {
+  pricePerNight: number;
+  hotelId: string;
 };

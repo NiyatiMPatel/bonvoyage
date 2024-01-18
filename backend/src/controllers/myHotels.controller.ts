@@ -35,7 +35,6 @@ export const createMyHotel = async (req: Request, res: Response) => {
 };
 
 // GET ALL MY HOTELS
-
 export const readMyHotels = async (req: Request, res: Response) => {
   try {
     const hotels = await HotelModel.find({ userId: req.userId });

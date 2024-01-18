@@ -24,6 +24,7 @@ const SignInPage = lazy(() => import("./pages/SignInPage"));
 const AddHotelPage = lazy(() => import("./pages/AddHotelPage"));
 const MyHotelsPage = lazy(() => import("./pages/MyHotelsPage"));
 const EditHotelPage = lazy(() => import("./pages/EditHotelPage"));
+const HotelDetailPage = lazy(() => import("./pages/HotelDetailPage"));
 
 let router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ let router = createBrowserRouter([
       {
         path: "search",
         element: <SearchPage />,
+      },
+      {
+        path: "/detail/:hotelId",
+        element: <HotelDetailPage />,
       },
       {
         path: "register",
@@ -82,9 +87,9 @@ function App() {
     queryFn: apiClient.validateToken,
     retry: false,
   });
-  // useEffect(() => {
-  //   dispatch(setLoggedIn(!isError));
-  // }, [isError]);
+  useEffect(() => {
+    dispatch(setLoggedIn(!isError));
+  }, [isError]);
   return (
     <>
       <ToastContainer />

@@ -213,3 +213,24 @@ export const searchHotels = async (
     throw new Error(error as string | undefined);
   }
 };
+
+// GET HOTEL DETAILS
+export const hotelDetails = async (hotelId: string): Promise<HotelType> => {
+  try {
+    const response = await axiosInstance.get(`/api/hotels/${hotelId}`);
+    if (response?.status !== 200) {
+      Notification.error(response?.data?.message);
+      throw new Error(response?.data);
+    }
+    // console.log("hotelDetails ~ response:", response);
+    // Notification.success(response?.data?.message);
+
+    return response?.data?.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.log("searchHotels ~ error:", error);
+      Notification.error(error?.response?.data?.message || error?.message);
+    }
+    throw new Error(error as string | undefined);
+  }
+};

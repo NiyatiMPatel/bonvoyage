@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
+import { validationResult } from "express-validator";
 import HotelModel from "../models/hotel.model";
 
+//GET ALL SEARCHED HOTELS
 export const getSearch = async (req: Request, res: Response) => {
   try {
     const query = constructSearchQuery(req.query);
@@ -50,6 +52,27 @@ export const getSearch = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.log("getSearch ~ error:", error);
+    res.status(500).send({
+      message: "Something went wrong",
+    });
+  }
+};
+
+// GET A SINGLE HOTEL
+export const getsearchedHotel = async (req: Request, res: Response) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty) {
+    return res.status(400).send({ errors: errors.array });
+  }
+  try {
+    const id = req.params.id.toString();
+    const hotel = await HotelModel.findById(id);
+    res.status(200).send({
+      data: hotel,
+      message: "Fetched hotel Successfuly",
+    });
+  } catch (error) {
+    console.log("getsearchedHotel ~ error:", error);
     res.status(500).send({
       message: "Something went wrong",
     });

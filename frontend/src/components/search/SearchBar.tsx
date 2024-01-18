@@ -33,7 +33,7 @@ const SearchBar = () => {
   };
 
   const submitHandler = (values: SearchVariables) => {
-    console.log("submitHandler ~ values:", values);
+    // console.log("submitHandler ~ values:", values);
     dispatch(setDestination(values.destination));
     dispatch(setAdultCount(values.adultCount));
     dispatch(setChildCount(values.childCount));

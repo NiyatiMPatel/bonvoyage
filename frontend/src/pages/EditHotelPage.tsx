@@ -1,14 +1,14 @@
 import { useParams } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import * as apiClient from "../axios/api-client";
-import ManageHotelForm from "../components/hotel/ManageHotelForm";
+import ManageHotelForm from "../components/adminHotel/ManageHotelForm";
 
 const EditHotelPage = () => {
   const { hotelId } = useParams();
   // console.log("EditHotelPage ~ hoteId:", hotelId);
   const { data } = useQuery({
     queryKey: ["fetchMyHotelById", hotelId],
-    queryFn: () => apiClient.getMyHotelById(hotelId!),
+    queryFn: () => apiClient.getMyHotelById(hotelId! as string),
   });
 
   const { mutate, isPending } = useMutation({

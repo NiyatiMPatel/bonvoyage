@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { Formik, Field, Form, ErrorMessage, FormikHelpers } from "formik";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import * as apiClient from "../../axios/api-client";
 import { setLoggedIn } from "../../redux/userSlice";
@@ -10,18 +10,18 @@ const SignIn = () => {
 
   const navigate = useNavigate();
 
+  const location = useLocation();
+
   const { data, mutate, isPending } = useMutation({
     mutationFn: apiClient.login,
     onSuccess: async () => {
       dispatch(setLoggedIn(true));
-      navigate("/");
+      navigate(location.state?.from ?? "/");
     },
     onError: (error: Error) => {
       console.log("Register ~ error:", error);
     },
   });
-  // console.log("SignIn ~ data:", data);
-  // Object.keys(data?.data)?.length > 0 && navigate("/");
 
   // FORMIK INITIAL VALUES DEFINITION
   const initialValues: SignInFromValueType = {

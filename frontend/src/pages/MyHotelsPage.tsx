@@ -1,4 +1,4 @@
-import MyHotels from "../components/hotel/MyHotels";
+import MyHotels from "../components/adminHotel/MyHotels";
 
 const MyHotelsPage = () => {
   return <MyHotels />;

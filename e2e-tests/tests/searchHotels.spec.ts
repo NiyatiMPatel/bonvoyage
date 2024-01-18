@@ -32,3 +32,16 @@ test("should show hotel search results", async ({ page }) => {
   await expect(page.getByText("Hotels found in Califonia")).toBeVisible();
   await expect(page.getByText("Radissons").first()).toBeVisible();
 });
+
+// ========= HOTEL DETAILS TEST ================ //
+
+test("should show hotel detail", async ({ page }) => {
+  await page.goto(UI_URL);
+
+  await page.getByPlaceholder("Where are you going?").fill("Califonia");
+  await page.getByRole("button", { name: "Search" }).click();
+
+  await page.getByText("Radissons").first().click();
+  await expect(page).toHaveURL(/detail/);
+  await expect(page.getByRole("button", { name: "Book now" })).toBeVisible();
+});
