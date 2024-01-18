@@ -11,17 +11,24 @@ import {
   setChildCount,
 } from "../../redux/searchSlice";
 import { useLocation, useNavigate } from "react-router-dom";
+import { RootState } from "../../redux/store";
 
 const BookNowForm = ({ hotelId, pricePerNight }: BookNowProps) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  const isLoggedIn = useAppSelector((state) => state?.user.isLoggedIn);
-  const checkIn = useAppSelector((state) => state?.search.checkIn);
-  const checkOut = useAppSelector((state) => state?.search.checkOut);
-  const adultCount = useAppSelector((state) => state?.search.adultCount);
-  const childCount = useAppSelector((state) => state?.search.childCount);
+  const isLoggedIn = useAppSelector(
+    (state: RootState) => state?.user.isLoggedIn
+  );
+  const checkIn = useAppSelector((state: RootState) => state?.search.checkIn);
+  const checkOut = useAppSelector((state: RootState) => state?.search.checkOut);
+  const adultCount = useAppSelector(
+    (state: RootState) => state?.search.adultCount
+  );
+  const childCount = useAppSelector(
+    (state: RootState) => state?.search.childCount
+  );
 
   const initialValues: GuestBookNowFormData = {
     checkIn: checkIn,

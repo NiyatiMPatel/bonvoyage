@@ -12,17 +12,24 @@ import {
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { MdTravelExplore } from "react-icons/md";
+import { RootState } from "../../redux/store";
 
 const SearchBar = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const destination = useAppSelector((state) => state?.search.destination);
-  const checkIn = useAppSelector((state) => state?.search.checkIn);
-  const checkOut = useAppSelector((state) => state?.search.checkOut);
-  const adultCount = useAppSelector((state) => state?.search.adultCount);
-  const childCount = useAppSelector((state) => state?.search.childCount);
+  const destination = useAppSelector(
+    (state: RootState) => state?.search.destination
+  );
+  const checkIn = useAppSelector((state: RootState) => state?.search.checkIn);
+  const checkOut = useAppSelector((state: RootState) => state?.search.checkOut);
+  const adultCount = useAppSelector(
+    (state: RootState) => state?.search.adultCount
+  );
+  const childCount = useAppSelector(
+    (state: RootState) => state?.search.childCount
+  );
 
   const initialValues: SearchVariables = {
     destination: destination,

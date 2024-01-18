@@ -1,15 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
-
-// // Define a type for the slice state
-// interface SearchVariables {
-//   destination: string;
-//   checkIn: Date;
-//   checkOut: Date;
-//   adultCount: number;
-//   childCount: number;
-//   hotelId?: string;
-// }
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // Define the initial state using that type
 const initialState: SearchVariables = {

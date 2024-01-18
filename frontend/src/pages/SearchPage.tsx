@@ -8,6 +8,7 @@ import StarRatingFilter from "../components/search/StarRatingFilter";
 import FacilitiesFilter from "../components/search/FacilitiesFilter";
 import HotelTypesFilter from "../components/search/HotelTypesFilter";
 import PriceFilter from "../components/search/PriceFilter";
+import { RootState } from "../redux/store";
 const SearchPage = () => {
   const [page, setPage] = useState<number>(1);
   const [selectedStars, setSelectedStars] = useState<string[]>([]);
@@ -16,11 +17,17 @@ const SearchPage = () => {
   const [selectedPrice, setSelectedPrice] = useState<number | undefined>();
   const [sortOption, setSortOption] = useState<string>("");
 
-  const destination = useAppSelector((state) => state?.search.destination);
-  const checkIn = useAppSelector((state) => state?.search.checkIn);
-  const checkOut = useAppSelector((state) => state?.search.checkOut);
-  const adultCount = useAppSelector((state) => state?.search.adultCount);
-  const childCount = useAppSelector((state) => state?.search.childCount);
+  const destination = useAppSelector(
+    (state: RootState) => state?.search.destination
+  );
+  const checkIn = useAppSelector((state: RootState) => state?.search.checkIn);
+  const checkOut = useAppSelector((state: RootState) => state?.search.checkOut);
+  const adultCount = useAppSelector(
+    (state: RootState) => state?.search.adultCount
+  );
+  const childCount = useAppSelector(
+    (state: RootState) => state?.search.childCount
+  );
 
   const searchParams: SearchQueryParams = {
     destination: destination,
