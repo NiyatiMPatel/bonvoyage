@@ -1,4 +1,5 @@
 const Pagination = ({
+  // isLoading,
   currentPage,
   totalPages,
   onPageChange,
@@ -11,6 +12,7 @@ const Pagination = ({
 
   return (
     <div className="flex justify-center">
+      {/* {!isLoading && ( */}
       <ul className="flex border border-slate-300">
         {/* pagination bar */}
         {pageNumbers.map((number) => (
@@ -24,6 +26,7 @@ const Pagination = ({
           </li>
         ))}
       </ul>
+      {/* )} */}
     </div>
   );
 };

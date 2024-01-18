@@ -67,7 +67,7 @@ type SearchVariables = {
   hotelId?: string;
 };
 
-//Define a type for search query parameters to send to backend
+//Define a type for search query parameters to send to backend - match variables with backend
 type SearchQueryParams = {
   destination?: string;
   checkIn?: string;
@@ -75,6 +75,11 @@ type SearchQueryParams = {
   adultCount?: string;
   childCount?: string;
   page?: string;
+  facilities?: string[];
+  types?: string[];
+  stars?: string[];
+  maxPrice?: string;
+  sortOption?: string;
 };
 
 // MANAGE HOTEL FORM PROPS DATA
@@ -91,7 +96,20 @@ type SearchResultsCardProps = {
 
 // PAGINATION PROPS
 type PaginationProps = {
+  isLoading: boolean;
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
+};
+
+// FACILITIES, STAR RATING, TYPES FILTER PROPS
+type FSTProps = {
+  selection: string[];
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
+// MAX PRICE FILTER PROPS
+type PriceProps = {
+  selectedPrice?: number;
+  onChange: (value?: number) => void;
 };

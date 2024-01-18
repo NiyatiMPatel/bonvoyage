@@ -175,12 +175,25 @@ export const searchHotels = async (
 ): Promise<HotelSearchResponse> => {
   try {
     const queryParams = new URLSearchParams(); // predefined object
+    queryParams.append("page", searchQueryParams.page || "");
     queryParams.append("destination", searchQueryParams.destination || "");
     queryParams.append("checkIn", searchQueryParams.checkIn || "");
     queryParams.append("checkOut", searchQueryParams.checkOut || "");
     queryParams.append("adultCount", searchQueryParams.adultCount || "");
     queryParams.append("childCount", searchQueryParams.childCount || "");
-    queryParams.append("page", searchQueryParams.page || "");
+    queryParams.append("maxPrice", searchQueryParams.maxPrice || "");
+    queryParams.append("sortOption", searchQueryParams.sortOption || "");
+
+    searchQueryParams.facilities?.forEach((facility) =>
+      queryParams.append("facilities", facility)
+    );
+
+    searchQueryParams.types?.forEach((type) =>
+      queryParams.append("types", type)
+    );
+    searchQueryParams.stars?.forEach((star) =>
+      queryParams.append("stars", star)
+    );
 
     const response = await axiosInstance.get(
       `/api/hotels/search?${queryParams}`

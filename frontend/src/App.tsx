@@ -82,9 +82,9 @@ function App() {
     queryFn: apiClient.validateToken,
     retry: false,
   });
-  useEffect(() => {
-    dispatch(setLoggedIn(!isError));
-  }, [isError]);
+  // useEffect(() => {
+  //   dispatch(setLoggedIn(!isError));
+  // }, [isError]);
   return (
     <>
       <ToastContainer />

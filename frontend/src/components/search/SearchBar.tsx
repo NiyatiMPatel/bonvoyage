@@ -1,3 +1,4 @@
+import { useLocation, useNavigate } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import { useAppSelector } from "../../redux/hooks";
 import { useAppDispatch } from "../../redux/hooks";
@@ -11,11 +12,11 @@ import {
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { MdTravelExplore } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
 
 const SearchBar = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const destination = useAppSelector((state) => state?.search.destination);
   const checkIn = useAppSelector((state) => state?.search.checkIn);
@@ -39,15 +40,26 @@ const SearchBar = () => {
     dispatch(setCheckIn(values.checkIn));
     dispatch(setCheckOut(values.checkOut));
 
-    navigate("/search");
+    location.pathname !== "/search" && navigate("/search");
+  };
+  const clearHandler = () => {
+    dispatch(setDestination(""));
+    dispatch(setAdultCount(1));
+    dispatch(setChildCount(0));
+    dispatch(setCheckOut(new Date()));
+    dispatch(setCheckIn(new Date()));
   };
 
   const minDate = new Date();
   const maxDate = new Date();
   maxDate.setFullYear(maxDate.getFullYear() + 1); // 1 year from now
   return (
-    <Formik initialValues={initialValues} onSubmit={submitHandler}>
-      {({ values, setFieldValue }) => (
+    <Formik
+      initialValues={initialValues}
+      onSubmit={submitHandler}
+      enableReinitialize={true}
+    >
+      {({ values, setFieldValue, resetForm }) => (
         <Form className="-mt-8 p-3 bg-orange-400 rounded shadow-md grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 items-center gap-4">
           <div className="flex flex-row items-center flex-1 bg-white p-2">
             <MdTravelExplore size={25} className="mr-2" />
@@ -56,6 +68,7 @@ const SearchBar = () => {
               className="text-md w-full focus:outline-none"
               name="destination"
               type="text"
+              // value={values.destination}
             />
           </div>
 
@@ -69,6 +82,7 @@ const SearchBar = () => {
                 max={20}
                 name="adultCount"
                 id="adultCount"
+                // value={values.adultCount}
               />
             </label>
             <label className="items-center flex flex-1" htmlFor="childCount">
@@ -80,6 +94,7 @@ const SearchBar = () => {
                 max={20}
                 name="childCount"
                 id="childCount"
+                // value={values.childCount}
               />
             </label>
           </div>
@@ -100,6 +115,7 @@ const SearchBar = () => {
                   placeholderText="Check-in Date"
                   className="min-w-full bg-white p-2 focus:outline-none"
                   wrapperClassName="min-w-full"
+                  // value={new Date(values.checkIn)}
                 />
               )}
             </Field>
@@ -120,6 +136,7 @@ const SearchBar = () => {
                   placeholderText="Check-out Date"
                   className="min-w-full bg-white p-2 focus:outline-none"
                   wrapperClassName="min-w-full"
+                  // value={new Date(values.checkOut)}
                 />
               )}
             </Field>
@@ -134,14 +151,10 @@ const SearchBar = () => {
             </button>
             <button
               className="w-1/3 bg-red-600 text-white h-full p-2 font-bold text-xl hover:bg-red-500"
-              type="reset"
+              type="button"
               onClick={() => {
-                dispatch(setDestination(""));
-                dispatch(setAdultCount(1));
-                dispatch(setChildCount(0));
-                dispatch(setCheckOut(new Date()));
-                dispatch(setCheckIn(new Date()));
-                // resetForm();
+                clearHandler();
+                resetForm();
               }}
             >
               Clear
