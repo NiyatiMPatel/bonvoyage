@@ -1,4 +1,6 @@
 import { Schema, model } from "mongoose";
+import { HotelType } from "../types/type";
+import BookingModel from "./booking.model";
 
 const HotelSchema = new Schema<HotelType>({
   userId: { type: String, required: true },
@@ -14,6 +16,7 @@ const HotelSchema = new Schema<HotelType>({
   starRating: { type: Number, required: true, min: 1, max: 5 },
   imageUrls: [{ type: String, required: true }],
   lastUpdated: { type: Date, required: true },
+  bookings: [BookingModel.schema], // EMBBED WHOLE BOOKING OBJECT
 });
 
 export default model<HotelType>("Hotel", HotelSchema);

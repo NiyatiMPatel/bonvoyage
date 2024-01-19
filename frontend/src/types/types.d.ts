@@ -13,6 +13,15 @@ type SignInFromValueType = {
   password: string;
 };
 
+// Define the UserType type, representing the structure of a user object.
+type UserType = {
+  _id: string;
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+};
+
 // CREATE HOTEL FORM DATA
 type HotelFormData = {
   name: string;
@@ -45,6 +54,7 @@ type HotelType = {
   starRating: number;
   imageUrls: string[];
   lastUpdated: Date;
+  bookings: BookingType[];
 };
 
 // PAGINATED HOTEL SEARCH RESPONSE
@@ -80,6 +90,20 @@ type SearchQueryParams = {
   stars?: string[];
   maxPrice?: string;
   sortOption?: string;
+};
+
+// BOOKING FORM DATA
+type BookingFormData = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  adultCount: number;
+  childCount: number;
+  checkIn: string;
+  checkOut: string;
+  hotelId: string;
+  paymentIntentId: string;
+  totalCost: number;
 };
 
 // GUEST BOOK NOW FORM DATA
@@ -122,8 +146,55 @@ type PriceProps = {
   onChange: (value?: number) => void;
 };
 
+// HOTEL DETAIL PROPS
+type HotelDetailsProps = {
+  data: HotelType;
+};
 // BOOK NOW FORM PROPS
 type BookNowProps = {
   pricePerNight: number;
   hotelId: string;
+};
+
+// BOOKING DETAIL SUMMARY PROPS
+type BookingDetailSummaryProps = {
+  // checkIn: Date;
+  // checkOut: Date;
+  // adultCount: number;
+  // childCount: number;
+  numberOfNights: number;
+  hotel: HotelType;
+};
+
+// BOOKING FORM PROPS
+type BookingFormProps = {
+  currentUser: UserType;
+  paymentIntentData: PaymentIntentResponse;
+};
+
+// Define the Payment intend response type, representing the structure of payment intend result
+type PaymentIntentResponse = {
+  paymentIntentId: string;
+  clientSecret: string;
+  totalCost: number;
+};
+
+// Define the BookingType type, representing the structure of a Booking object.
+export type BookingType = {
+  _id: string;
+  userId: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  adultCount: number;
+  childCount: number;
+  checkIn: Date;
+  checkOut: Date;
+  totalCost: number;
+};
+
+type StripeState = {
+  stripePromise: Promise<Stripe | null>;
+  // loading: boolean;
+  // error: string | null;
 };

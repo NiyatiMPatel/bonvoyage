@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import * as apiClient from "../../axios/api-client";
 import { setLoggedIn } from "../../redux/userSlice";
 import { useAppDispatch } from "../../redux/hooks";
+import { SignInFromValueType } from "../../types/types";
 const SignIn = () => {
   const dispatch = useAppDispatch();
 

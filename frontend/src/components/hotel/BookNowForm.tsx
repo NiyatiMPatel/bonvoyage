@@ -12,6 +12,7 @@ import {
 } from "../../redux/searchSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import { RootState } from "../../redux/store";
+import { BookNowProps, GuestBookNowFormData } from "../../types/types";
 
 const BookNowForm = ({ hotelId, pricePerNight }: BookNowProps) => {
   const dispatch = useAppDispatch();
@@ -57,7 +58,7 @@ const BookNowForm = ({ hotelId, pricePerNight }: BookNowProps) => {
     dispatch(setChildCount(values.childCount));
     dispatch(setCheckOut(values.checkOut));
     dispatch(setCheckIn(values.checkIn));
-    navigate(`/hotel/${hotelId}/booking`);
+    navigate(`/hotel/${hotelId}/booking`); //BOOKING PAGE
   };
 
   const minDate = new Date();

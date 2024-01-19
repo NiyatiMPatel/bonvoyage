@@ -23,6 +23,21 @@ type HotelType = {
   starRating: number;
   imageUrls: string[];
   lastUpdated: Date;
+  bookings: BookingType[];
+};
+
+// Define the BookingType type, representing the structure of a Booking object.
+export type BookingType = {
+  _id: string;
+  userId: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  adultCount: number;
+  childCount: number;
+  checkIn: Date;
+  checkOut: Date;
+  totalCost: number;
 };
 
 // Define the paginated Hote response type, representing the structure of paginated search result
@@ -34,4 +49,11 @@ type HotelSearchResponse = {
     currentPage: number;
     totalPages: number;
   };
+};
+
+// Define the Payment intend response type, representing the structure of payment intend result
+type PaymentIntentResponse = {
+  paymentIntentId: string;
+  clientSecret: string;
+  totalCost: number;
 };

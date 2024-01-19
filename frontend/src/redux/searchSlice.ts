@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { SearchVariables } from "../types/types";
 
 // Define the initial state using that type
 const initialState: SearchVariables = {

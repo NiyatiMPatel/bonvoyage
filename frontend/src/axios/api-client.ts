@@ -1,6 +1,36 @@
 import Notification from "../layout/Toast";
+import {
+  HotelSearchResponse,
+  HotelType,
+  PaymentIntentResponse,
+  RegisterFormValuesType,
+  SearchQueryParams,
+  SignInFromValueType,
+  UserType,
+} from "../types/types";
 import axiosInstance from "./axios-utils";
 import axios from "axios";
+
+// GET USER DETAILS
+export const userDetails = async (): Promise<UserType> => {
+  try {
+    const response = await axiosInstance.get("/api/users/me");
+
+    if (response?.status !== 200) {
+      Notification.error(response?.data?.message);
+      throw new Error(response?.data);
+    }
+    // Notification.success(response?.data?.message);
+    // console.log("userDetails ~ response:", response);
+    return response?.data?.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.log("userDetails ~ error:", error);
+      Notification.error(error?.response?.data?.message || error?.message);
+    }
+    throw new Error(error as string | undefined);
+  }
+};
 
 // USER REGISTRATION
 export const register = async (formData: RegisterFormValuesType) => {
@@ -223,6 +253,41 @@ export const hotelDetails = async (hotelId: string): Promise<HotelType> => {
       throw new Error(response?.data);
     }
     // console.log("hotelDetails ~ response:", response);
+    // Notification.success(response?.data?.message);
+
+    return response?.data?.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.log("searchHotels ~ error:", error);
+      Notification.error(error?.response?.data?.message || error?.message);
+    }
+    throw new Error(error as string | undefined);
+  }
+};
+
+//PAYMENT INTENT ENDPOINT
+export const createPaymentIntent = async (
+  hotelId: string,
+  numberOfNights: string
+): Promise<PaymentIntentResponse> => {
+  console.log("numberOfNights:", numberOfNights);
+  console.log("hotelId:", hotelId);
+  try {
+    const response = await axiosInstance.post(
+      `/api/hotels/${hotelId}/bookings/payment-intent`,
+      { numberOfNights: numberOfNights.toString() },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          // Accept: "application/json",
+        },
+      }
+    );
+    if (response?.status !== 200) {
+      Notification.error(response?.data?.message);
+      throw new Error(response?.data);
+    }
+    console.log("createPaymentIntent ~ response:", response);
     // Notification.success(response?.data?.message);
 
     return response?.data?.data;

@@ -1,6 +1,10 @@
 import { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import HotelModel from "../models/hotel.model";
+import Stripe from "stripe";
+import { HotelSearchResponse } from "../types/type";
+
+const stripe = new Stripe(process.env.STRIPE_API_KEY as string);
 
 //GET ALL SEARCHED HOTELS
 export const getSearch = async (req: Request, res: Response) => {
@@ -73,6 +77,55 @@ export const getsearchedHotel = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.log("getsearchedHotel ~ error:", error);
+    res.status(500).send({
+      message: "Something went wrong",
+    });
+  }
+};
+
+// STRIPE ENDPOINT - POST
+export const paymentIntent = async (req: Request, res: Response) => {
+  try {
+    // 1. TOTAL COST OF THIS BOOKING -> TOTAL NO. OF NIGHTS
+    // 2. HOTELID TO BIND PAYMENT INTENT TO THAT HOTEL
+    // 3. USERID OF USER WHO IS CREATING THIS BOOKING TO BIND TO PAYMENT INTENT
+
+    const { numberOfNights } = req.body;
+    console.log("paymentIntent ~ numberOfNights:", numberOfNights);
+    const hotelId = req.params.hotelId;
+    console.log("paymentIntent ~ hotelId:", hotelId);
+    const userId = req.userId;
+    console.log("paymentIntent ~ userId:", userId);
+    const hotel = await HotelModel.findById(hotelId);
+    // console.log("paymentIntent ~ hotel:", hotel);
+    if (!hotel) {
+      return res.status(400).send({ message: "Hotel not found" });
+    }
+    const totalCost = hotel.pricePerNight * numberOfNights;
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: totalCost,
+      currency: "cad",
+      metadata: {
+        hotelId,
+        userId,
+      },
+    });
+
+    if (!paymentIntent.client_secret) {
+      return res.status(500).send({ message: "Error creating payment intent" });
+    }
+
+    const response = {
+      paymentIntentId: paymentIntent.id,
+      clientSecret: paymentIntent.client_secret.toString(),
+      totalCost,
+    };
+    res.send({
+      data: response,
+      message: "Payment intent created successfully",
+    });
+  } catch (error) {
+    console.log("paymentIntent ~ error:", error);
     res.status(500).send({
       message: "Something went wrong",
     });

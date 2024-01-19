@@ -41,7 +41,12 @@ export const store = configureStore({
           "search/setCheckIn",
           "search/setCheckOut",
         ],
-        ignoredPaths: ["search.checkIn", "search.checkOut", "payload"],
+        ignoredPaths: [
+          "stripe.stripePromise",
+          "search.checkIn",
+          "search.checkOut",
+          "payload",
+        ],
       },
     }),
 });

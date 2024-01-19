@@ -1,5 +1,6 @@
 import { Schema, model } from "mongoose";
 import bcrypt from "bcryptjs";
+import { UserType } from "../types/type";
 
 // Create the UserSchema using Mongoose Schema, specifying the data types and constraints.
 const UserSchema = new Schema<UserType>({

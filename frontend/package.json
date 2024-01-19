@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.0.1",
+    "@stripe/react-stripe-js": "^2.4.0",
+    "@stripe/stripe-js": "^2.3.0",
     "@tanstack/react-query": "^5.0.0-beta.35",
     "@types/axios": "^0.14.0",
     "@types/yup": "^0.32.0",

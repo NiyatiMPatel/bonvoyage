@@ -3,8 +3,9 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
-import { persistor, store } from "./redux/store.ts";
+// import { PersistGate } from "redux-persist/integration/react";
+// import { persistor, store } from "./redux/store.ts";
+import { store } from "./redux/store.ts";
 import "./index.css";
 
 //  QueryClient serves as a centralized state manager for managing the state of queries and mutations in application. It is responsible for caching query results, handling background refetching, managing query statuses, and more.

@@ -9,6 +9,7 @@ import FacilitiesFilter from "../components/search/FacilitiesFilter";
 import HotelTypesFilter from "../components/search/HotelTypesFilter";
 import PriceFilter from "../components/search/PriceFilter";
 import { RootState } from "../redux/store";
+import { SearchQueryParams } from "../types/types";
 const SearchPage = () => {
   const [page, setPage] = useState<number>(1);
   const [selectedStars, setSelectedStars] = useState<string[]>([]);
@@ -48,7 +49,7 @@ const SearchPage = () => {
     queryFn: () => apiClient.searchHotels(searchParams),
   });
   // console.log("SearchResults ~ data:", data);
-  console.log("SearchPage ~ page:", page);
+  // console.log("SearchPage ~ page:", page);
 
   // ============ FILTERS ==============
   // STAR RATING FILTER
@@ -154,7 +155,7 @@ const SearchPage = () => {
               isLoading={isLoading}
               currentPage={data?.pagination.currentPage || 1}
               totalPages={data?.pagination.totalPages || 1}
-              onPageChange={(page) => setPage(page)}
+              onPageChange={(page: number) => setPage(page)}
             />
           )}
         </div>

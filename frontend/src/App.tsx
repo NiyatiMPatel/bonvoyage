@@ -25,6 +25,7 @@ const AddHotelPage = lazy(() => import("./pages/AddHotelPage"));
 const MyHotelsPage = lazy(() => import("./pages/MyHotelsPage"));
 const EditHotelPage = lazy(() => import("./pages/EditHotelPage"));
 const HotelDetailPage = lazy(() => import("./pages/HotelDetailPage"));
+const BookingPage = lazy(() => import("./pages/BookingPage"));
 
 let router = createBrowserRouter([
   {
@@ -54,6 +55,11 @@ let router = createBrowserRouter([
         element: <ProtectedRouteWrapper />,
         children: [
           {
+            path: `hotel/:hotelId/booking`,
+            element: <BookingPage />,
+            errorElement: <ErrorPage />,
+          },
+          {
             path: "add-hotel",
             element: <AddHotelPage />,
             errorElement: <ErrorPage />,
@@ -80,16 +86,19 @@ let router = createBrowserRouter([
 
 function App() {
   const dispatch = useAppDispatch();
-  const { isError } = useQuery({
+  const { data: verifyToken, isError } = useQuery({
     // IDENTIFIER TO REUSE THE DATA LATER WHEN REQUIRED
     queryKey: ["validateToken"],
     // API CALLING FUNCTION
     queryFn: apiClient.validateToken,
     retry: false,
   });
+
   useEffect(() => {
-    dispatch(setLoggedIn(!isError));
-  }, [isError]);
+    if (verifyToken) {
+      dispatch(setLoggedIn(!isError));
+    }
+  }, [dispatch, verifyToken, isError]);
   return (
     <>
       <ToastContainer />

@@ -50,3 +50,23 @@ export const registerController = async (req: Request, res: Response) => {
     });
   }
 };
+
+//GET CURRENT LOGGED IN USER
+export const currentUser = async (req: Request, res: Response) => {
+  try {
+    const userId = req.userId;
+    const user = await UserModel.findById(userId).select("-password");
+    if (!user) {
+      return res.status(400).send({ message: "User not found" });
+    }
+    return res.status(200).send({
+      data: user,
+      message: "Fetched user Successfully",
+    });
+  } catch (error) {
+    console.log("currentUser ~ error:", error);
+    res.status(500).send({
+      message: "Something went wrong",
+    });
+  }
+};
