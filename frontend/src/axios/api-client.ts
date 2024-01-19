@@ -1,5 +1,6 @@
 import Notification from "../layout/Toast";
 import {
+  BookingFormData,
   HotelSearchResponse,
   HotelType,
   PaymentIntentResponse,
@@ -270,8 +271,6 @@ export const createPaymentIntent = async (
   hotelId: string,
   numberOfNights: string
 ): Promise<PaymentIntentResponse> => {
-  console.log("numberOfNights:", numberOfNights);
-  console.log("hotelId:", hotelId);
   try {
     const response = await axiosInstance.post(
       `/api/hotels/${hotelId}/bookings/payment-intent`,
@@ -287,8 +286,33 @@ export const createPaymentIntent = async (
       Notification.error(response?.data?.message);
       throw new Error(response?.data);
     }
-    console.log("createPaymentIntent ~ response:", response);
+    // console.log("createPaymentIntent ~ response:", response);
     // Notification.success(response?.data?.message);
+
+    return response?.data?.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.log("searchHotels ~ error:", error);
+      Notification.error(error?.response?.data?.message || error?.message);
+    }
+    throw new Error(error as string | undefined);
+  }
+};
+
+// BOOKING ENDPOINT
+
+export const createBooking = async (formData: BookingFormData) => {
+  try {
+    const response = await axiosInstance.post(
+      `/api/hotels/${formData.hotelId}/bookings/`,
+      formData
+    );
+    if (response?.status !== 200) {
+      Notification.error(response?.data?.message);
+      throw new Error(response?.data);
+    }
+    console.log("createBooking ~ response:", response);
+    Notification.success(response?.data?.message);
 
     return response?.data?.data;
   } catch (error) {

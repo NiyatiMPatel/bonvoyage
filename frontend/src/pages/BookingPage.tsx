@@ -6,6 +6,8 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../redux/hooks";
 import { RootState } from "../redux/store";
+import { Elements } from "@stripe/react-stripe-js";
+import stripePromise from "../stripe/StripeConfig";
 
 const BookingPage = () => {
   const [numberOfNights, setNumberOfNights] = useState<number>(0);
@@ -61,17 +63,17 @@ const BookingPage = () => {
     <div className="grid md:grid-cols-[1fr_2fr] gap-4">
       <BookingDetailSummary hotel={hotel} numberOfNights={numberOfNights} />
       {currentUser && paymentIntentData && (
-        // <Elements
-        //   stripe={stripePromise}
-        //   options={{
-        //     clientSecret: paymentIntentData.clientSecret,
-        //   }}
-        // >
-        <BookingForm
-          currentUser={currentUser}
-          paymentIntentData={paymentIntentData}
-        />
-        // </Elements>
+        <Elements
+          stripe={stripePromise}
+          options={{
+            clientSecret: paymentIntentData.clientSecret,
+          }}
+        >
+          <BookingForm
+            currentUser={currentUser}
+            paymentIntentData={paymentIntentData}
+          />
+        </Elements>
       )}
     </div>
   );

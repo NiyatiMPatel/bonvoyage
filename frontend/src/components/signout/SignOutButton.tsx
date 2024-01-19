@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as apiClient from "../../axios/api-client";
 import { useNavigate } from "react-router-dom";
-import { persistor } from "../../redux/store";
 import { useAppDispatch } from "../../redux/hooks";
 import {
   setAdultCount,

@@ -3,6 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { Formik, Field, Form, ErrorMessage, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import * as apiClient from "../../axios/api-client";
+import { RegisterFormValuesType } from "../../types/types";
 
 const Register = () => {
   const navigate = useNavigate();

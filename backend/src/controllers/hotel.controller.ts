@@ -91,19 +91,15 @@ export const paymentIntent = async (req: Request, res: Response) => {
     // 3. USERID OF USER WHO IS CREATING THIS BOOKING TO BIND TO PAYMENT INTENT
 
     const { numberOfNights } = req.body;
-    console.log("paymentIntent ~ numberOfNights:", numberOfNights);
     const hotelId = req.params.hotelId;
-    console.log("paymentIntent ~ hotelId:", hotelId);
     const userId = req.userId;
-    console.log("paymentIntent ~ userId:", userId);
     const hotel = await HotelModel.findById(hotelId);
-    // console.log("paymentIntent ~ hotel:", hotel);
     if (!hotel) {
       return res.status(400).send({ message: "Hotel not found" });
     }
     const totalCost = hotel.pricePerNight * numberOfNights;
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: totalCost,
+      amount: totalCost * 100,
       currency: "cad",
       metadata: {
         hotelId,

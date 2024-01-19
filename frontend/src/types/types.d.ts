@@ -195,6 +195,4 @@ export type BookingType = {
 
 type StripeState = {
   stripePromise: Promise<Stripe | null>;
-  // loading: boolean;
-  // error: string | null;
 };

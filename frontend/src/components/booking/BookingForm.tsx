@@ -1,11 +1,27 @@
 import { Field, Form, Formik } from "formik";
-import { useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { RootState } from "../../redux/store";
 import { BookingFormData, BookingFormProps } from "../../types/types";
 import { useParams } from "react-router-dom";
+import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { StripeCardElement } from "@stripe/stripe-js";
+import { useMutation } from "@tanstack/react-query";
+import * as apiClient from "../../axios/api-client";
+import {
+  setAdultCount,
+  setCheckIn,
+  setCheckOut,
+  setChildCount,
+  setDestination,
+} from "../../redux/searchSlice";
 
 const BookingForm = ({ currentUser, paymentIntentData }: BookingFormProps) => {
+  const stripe = useStripe();
+  const elements = useElements();
+
   const { hotelId } = useParams();
+
+  const dispatch = useAppDispatch();
 
   const checkIn = useAppSelector((state: RootState) => state?.search.checkIn);
   const checkOut = useAppSelector((state: RootState) => state?.search.checkOut);
@@ -16,9 +32,9 @@ const BookingForm = ({ currentUser, paymentIntentData }: BookingFormProps) => {
     (state: RootState) => state?.search.childCount
   );
   const initialValues: BookingFormData = {
-    firstName: currentUser?.firstName || "",
-    lastName: currentUser?.lastName || "",
-    email: currentUser?.email || "",
+    firstName: currentUser?.firstName,
+    lastName: currentUser?.lastName,
+    email: currentUser?.email,
     adultCount: adultCount,
     childCount: childCount,
     checkIn: new Date(checkIn).toISOString(),
@@ -28,8 +44,38 @@ const BookingForm = ({ currentUser, paymentIntentData }: BookingFormProps) => {
     paymentIntentId: paymentIntentData.paymentIntentId,
   };
 
-  const submitHandler = (values: BookingFormData) => {
-    console.log("submitHandler ~ values:", values);
+  const { mutate: bookyRoom, isPending } = useMutation({
+    mutationFn: apiClient.createBooking,
+    onSuccess: () => {
+      dispatch(setDestination(""));
+      dispatch(setCheckIn(new Date()));
+      dispatch(setCheckOut(new Date()));
+      dispatch(setAdultCount(1));
+      dispatch(setChildCount(0));
+    },
+    onError: (error: Error) => {
+      console.log("BookingForm ~ error:", error);
+    },
+  });
+
+  const submitHandler = async (formData: BookingFormData) => {
+    console.log("submitHandler ~ formData:", formData);
+    if (!stripe || !elements) {
+      return;
+    }
+    const result = await stripe?.confirmCardPayment(
+      paymentIntentData.clientSecret,
+      {
+        payment_method: {
+          card: elements?.getElement(CardElement) as StripeCardElement,
+        },
+      }
+    );
+
+    if (result.paymentIntent?.status === "succeeded") {
+      // book hotel room
+      bookyRoom({ ...formData, paymentIntentId: result.paymentIntent.id });
+    }
   };
 
   return (
@@ -83,16 +129,19 @@ const BookingForm = ({ currentUser, paymentIntentData }: BookingFormProps) => {
 
           <div className="space-y-2">
             <h3 className="text-xl font-semibold"> Payment Details</h3>
+            <CardElement
+              id="payment-element"
+              className="border rounded-md p-2 text-sm"
+            />
           </div>
 
           <div className="flex justify-end">
             <button
-              // disabled={isLoading}
+              disabled={isPending}
               type="submit"
               className="bg-blue-600 text-white p-2 font-bold hover:bg-blue-500 text-md disabled:bg-gray-500"
             >
-              Confirm Booking
-              {/* {isLoading ? "Saving..." : "Confirm Booking"} */}
+              {isPending ? "Saving..." : "Confirm Booking"}
             </button>
           </div>
         </Form>

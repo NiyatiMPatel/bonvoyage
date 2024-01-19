@@ -45,7 +45,7 @@ const BookNowForm = ({ hotelId, pricePerNight }: BookNowProps) => {
   });
 
   const signInToBookSubmit = (values: GuestBookNowFormData) => {
-    console.log("signInToBookSubmit ~ values:", values);
+    // console.log("signInToBookSubmit ~ values:", values);
     dispatch(setAdultCount(values.adultCount));
     dispatch(setChildCount(values.childCount));
     dispatch(setCheckOut(values.checkOut));
@@ -53,7 +53,7 @@ const BookNowForm = ({ hotelId, pricePerNight }: BookNowProps) => {
     navigate("/sign-in", { state: { from: pathname } });
   };
   const bookNowSubmit = (values: GuestBookNowFormData) => {
-    console.log("bookNowSubmit ~ values:", values);
+    // console.log("bookNowSubmit ~ values:", values);
     dispatch(setAdultCount(values.adultCount));
     dispatch(setChildCount(values.childCount));
     dispatch(setCheckOut(values.checkOut));

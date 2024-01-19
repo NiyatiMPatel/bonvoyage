@@ -46,9 +46,9 @@ export const createBooking = async (req: Request, res: Response) => {
     };
 
     // Find and update the hotel document with the new booking
-    const hotel = await HotelModel.findByIdAndDelete(
+    const hotel = await HotelModel.findOneAndUpdate(
       { _id: req.params.hotelId },
-      { $push: { bookiings: newBooking } }
+      { $push: { bookings: newBooking } }
     );
 
     // Check if the hotel document exists
@@ -57,7 +57,7 @@ export const createBooking = async (req: Request, res: Response) => {
     }
     // Save the updated hotel document and send response
     await hotel.save();
-    res.status(200).send();
+    res.status(200).send({ data: hotel, message: "Booking done Successfully" });
   } catch (error) {
     console.log("createBooking ~ error:", error);
     res.status(500).send({
