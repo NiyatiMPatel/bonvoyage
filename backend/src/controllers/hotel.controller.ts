@@ -6,6 +6,19 @@ import { HotelSearchResponse } from "../types/type";
 
 const stripe = new Stripe(process.env.STRIPE_API_KEY as string);
 
+// FETCH HOTELS
+export const fetchHotels = async (req: Request, res: Response) => {
+  try {
+    const hotels = await HotelModel.find().sort("-lastUpdated");
+    res
+      .status(200)
+      .send({ data: hotels, message: "Fetched Hotels Successfully" });
+  } catch (error) {
+    console.log("error", error);
+    res.status(500).send({ message: "Error fetching hotels" });
+  }
+};
+
 //GET ALL SEARCHED HOTELS
 export const getSearch = async (req: Request, res: Response) => {
   try {

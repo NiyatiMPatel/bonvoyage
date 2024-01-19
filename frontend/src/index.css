@@ -3,12 +3,14 @@
 @tailwind utilities;
 
 /* Hide scrollbar for Chrome, Safari and Opera */
-body::-webkit-scrollbar {
+body::-webkit-scrollbar,
+.scrollbar-hidden::-webkit-scrollbar {
  display: none;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
-body {
+body,
+.scrollbar-hidden {
  -ms-overflow-style: none;
  /* IE and Edge */
  scrollbar-width: none;

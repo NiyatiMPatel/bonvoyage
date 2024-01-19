@@ -26,6 +26,7 @@ const MyHotelsPage = lazy(() => import("./pages/MyHotelsPage"));
 const EditHotelPage = lazy(() => import("./pages/EditHotelPage"));
 const HotelDetailPage = lazy(() => import("./pages/HotelDetailPage"));
 const BookingPage = lazy(() => import("./pages/BookingPage"));
+const MyBookingsPage = lazy(() => import("./pages/MyBookingsPage"));
 
 let router = createBrowserRouter([
   {
@@ -33,7 +34,7 @@ let router = createBrowserRouter([
     element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <HomePage /> },
+      { path: "/", element: <HomePage /> },
       {
         path: "search",
         element: <SearchPage />,
@@ -55,8 +56,8 @@ let router = createBrowserRouter([
         element: <ProtectedRouteWrapper />,
         children: [
           {
-            path: `hotel/:hotelId/booking`,
-            element: <BookingPage />,
+            path: "my-hotels",
+            element: <MyHotelsPage />,
             errorElement: <ErrorPage />,
           },
           {
@@ -65,13 +66,18 @@ let router = createBrowserRouter([
             errorElement: <ErrorPage />,
           },
           {
-            path: "my-hotels",
-            element: <MyHotelsPage />,
+            path: `edit-hotel/:hotelId`,
+            element: <EditHotelPage />,
             errorElement: <ErrorPage />,
           },
           {
-            path: `edit-hotel/:hotelId`,
-            element: <EditHotelPage />,
+            path: `hotel/:hotelId/booking`,
+            element: <BookingPage />,
+            errorElement: <ErrorPage />,
+          },
+          {
+            path: "my-bookings",
+            element: <MyBookingsPage />,
             errorElement: <ErrorPage />,
           },
         ],

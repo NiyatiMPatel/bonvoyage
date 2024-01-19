@@ -3,6 +3,7 @@ import BookNowForm from "../../components/hotel/BookNowForm";
 import { HotelDetailsProps } from "../../types/types";
 
 const HotelDetail = ({ data }: HotelDetailsProps) => {
+  console.log("HotelDetail ~ data:", data);
   return (
     <div className="space-y-6">
       <div>
@@ -15,7 +16,7 @@ const HotelDetail = ({ data }: HotelDetailsProps) => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {data.imageUrls.map((image, i) => (
+        {data?.imageUrls?.map((image, i) => (
           <div className="h-[300px]" key={i}>
             <img
               loading="lazy"
@@ -28,7 +29,7 @@ const HotelDetail = ({ data }: HotelDetailsProps) => {
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-        {data.facilities.map((facility) => (
+        {data?.facilities?.map((facility) => (
           <div
             className="border border-slate-300 rounded-sm p-3"
             key={facility}

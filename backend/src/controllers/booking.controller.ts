@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import Stripe from "stripe";
-import { BookingType } from "../types/type";
+import { BookingType, HotelType } from "../types/type";
 import HotelModel from "../models/hotel.model";
 
 // Create a new instance of the Stripe class with the provided API key
@@ -60,6 +60,37 @@ export const createBooking = async (req: Request, res: Response) => {
     res.status(200).send({ data: hotel, message: "Booking done Successfully" });
   } catch (error) {
     console.log("createBooking ~ error:", error);
+    res.status(500).send({
+      message: "Something went wrong",
+    });
+  }
+};
+
+// GET MY BOOKINGS
+export const getMyBookings = async (req: Request, res: Response) => {
+  try {
+    //FIND ALL HOTELS THAT HAS BOOKING FOR CURRENTLY LOGGED IN USER
+    const hotels = await HotelModel.find({
+      bookings: { $elemMatch: { userId: req.userId } },
+    });
+
+    const results = hotels.map((hotel) => {
+      const userBookings = hotel.bookings.filter(
+        (booking) => booking.userId === req.userId
+      );
+      const hotelWithUserBookings: HotelType = {
+        ...hotel.toObject(),
+        bookings: userBookings,
+      };
+      return hotelWithUserBookings;
+    });
+
+    res.status(200).send({
+      data: results,
+      message: "Fetched bookings successfully",
+    });
+  } catch (error) {
+    console.log("getMyBookings ~ error:", error);
     res.status(500).send({
       message: "Something went wrong",
     });

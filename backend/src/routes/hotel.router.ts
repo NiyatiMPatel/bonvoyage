@@ -1,6 +1,7 @@
 import express from "express";
 import { param } from "express-validator";
 import {
+  fetchHotels,
   getSearch,
   getsearchedHotel,
   paymentIntent,
@@ -9,6 +10,8 @@ import verifyToken from "../middleware/auth.middleware";
 import { createBooking } from "../controllers/booking.controller";
 
 const router = express.Router();
+
+router.get("/", fetchHotels);
 
 // GET SEARCH
 router.get("/search", getSearch);

@@ -134,6 +134,27 @@ export const addMyHotel = async (formData: FormData) => {
   }
 };
 
+// GET HOTELS FOR HOME
+export const fetchHotels = async () => {
+  try {
+    const response = await axiosInstance.get("/api/hotels");
+    console.log("fetchHotels ~ response:", response);
+
+    if (response?.status !== 200) {
+      Notification.error(response?.data?.message);
+      throw new Error(response?.data);
+    }
+    // Notification.success(response?.data?.message);
+    return response?.data?.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.log("getMyHotels ~ error:", error);
+      Notification.error(error?.response?.data?.message || error?.message);
+    }
+    throw new Error(error as string | undefined);
+  }
+};
+
 // GET ALL MY-HOTELS
 export const getMyHotels = async (): Promise<HotelType[]> => {
   try {
@@ -299,8 +320,7 @@ export const createPaymentIntent = async (
   }
 };
 
-// BOOKING ENDPOINT
-
+// BOOKING POST ENDPOINT
 export const createBooking = async (formData: BookingFormData) => {
   try {
     const response = await axiosInstance.post(
@@ -318,6 +338,25 @@ export const createBooking = async (formData: BookingFormData) => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.log("searchHotels ~ error:", error);
+      Notification.error(error?.response?.data?.message || error?.message);
+    }
+    throw new Error(error as string | undefined);
+  }
+};
+
+// MY BOOKINGS GET ENDPOINT
+export const getBookings = async (): Promise<HotelType[]> => {
+  try {
+    const response = await axiosInstance.get("/api/my-bookings");
+    if (response?.status !== 200) {
+      Notification.error(response?.data?.message);
+      throw new Error(response?.data);
+    }
+    // Notification.success(response?.data?.
+    return response?.data?.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.log("getBookings ~ error:", error);
       Notification.error(error?.response?.data?.message || error?.message);
     }
     throw new Error(error as string | undefined);
