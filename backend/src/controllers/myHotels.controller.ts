@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import cloudinary from "cloudinary";
 import HotelModel from "../models/hotel.model";
+import { HotelType } from "../types/type";
 
 // CREATE MY HOTELS
 export const createMyHotel = async (req: Request, res: Response) => {

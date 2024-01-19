@@ -6,6 +6,7 @@ import TypeSection from "./TypeSection";
 import FacilitiesSection from "./FacilitiesSection";
 import GuestsSection from "./GuestsSection";
 import ImagesSection from "./ImagesSection";
+import { HotelFormData, ManageHotelFormProps } from "../../types/types";
 
 const ManageHotelForm = ({
   onSave,

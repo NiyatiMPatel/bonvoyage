@@ -1,3 +1,5 @@
+import { FSTProps } from "../../types/types";
+
 const StarRatingFilter = ({ selection, onChange }: FSTProps) => {
   return (
     <div className="border-b border-slate-300 pb-5">

@@ -1,4 +1,5 @@
 import { ErrorMessage, Field, useFormikContext } from "formik";
+import { HotelFormData } from "../../types/types";
 
 const DetailsSection = () => {
   const { errors, touched } = useFormikContext<HotelFormData>();

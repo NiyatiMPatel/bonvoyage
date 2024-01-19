@@ -1,4 +1,5 @@
 import { hotelTypes } from "../../dummy/hotelOptions";
+import { FSTProps } from "../../types/types";
 
 const HotelTypesFilter = ({ selection, onChange }: FSTProps) => {
   return (

@@ -1,3 +1,5 @@
+import { PaginationProps } from "../../types/types";
+
 const Pagination = ({
   // isLoading,
   currentPage,

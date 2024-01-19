@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { AiFillStar } from "react-icons/ai";
+import { SearchResultsCardProps } from "../../types/types";
 
 const SearchResultsCard = ({ hotel }: SearchResultsCardProps) => {
   return (

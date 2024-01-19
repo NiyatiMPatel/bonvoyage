@@ -13,6 +13,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { MdTravelExplore } from "react-icons/md";
 import { RootState } from "../../redux/store";
+import { SearchVariables } from "../../types/types";
 
 const SearchBar = () => {
   const dispatch = useAppDispatch();

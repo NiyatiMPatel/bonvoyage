@@ -1,5 +1,6 @@
 import React from "react";
 import { ErrorMessage, useFormikContext } from "formik";
+import { HotelFormData } from "../../types/types";
 
 const ImagesSection = () => {
   const { values, setFieldValue } = useFormikContext<HotelFormData>();

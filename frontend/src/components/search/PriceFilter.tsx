@@ -1,3 +1,5 @@
+import { PriceProps } from "../../types/types";
+
 const PriceFilter = ({ selectedPrice, onChange }: PriceProps) => {
   const startNumber = 100;
   const endNumber = 3000;
