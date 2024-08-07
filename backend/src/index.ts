@@ -2,7 +2,6 @@ import express, { Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import "dotenv/config";
-import path from "path";
 import { cloudinaryConnect } from "./config/cloudinary";
 import { connectToMongo } from "./config/mongoose";
 import routes from "./routes/index";
@@ -28,23 +27,14 @@ app.use(
 );
 
 // INITIAL CONNECTION TEST
-// app.get("/api/test", async (req: Request, res: Response) => {
-//   res.json({
-//     message: "Hello from express endpoint",
-//   });
-// });
-
-// SERVING FILES STATICALLY FOR STATIC FILES ONLY HAS READ ACCESS
-app.use(express.static(path.join(__dirname, "..", "..", "frontend", "dist")));
+app.get("/api/test", async (req: Request, res: Response) => {
+  res.json({
+    message: "Hello from express endpoint",
+  });
+});
 
 // APP ROUTES
 app.use("/", routes);
-
-app.get("*", (req: Request, res: Response) => {
-  res.sendFile(
-    path.join(__dirname, "..", "..", "frontend", "dist", "index.html")
-  );
-});
 
 app.listen(process.env.PORT, () => {
   console.log("app.listen", `Server running on localhost:${process.env.PORT}`);

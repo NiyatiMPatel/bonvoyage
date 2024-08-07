@@ -40,8 +40,9 @@ export const loginController = async (req: Request, res: Response) => {
     );
     res.cookie("auth_token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: true,
       maxAge: 86400000, //same as expiresIn but in milliseconds
+      sameSite: "none",
     });
 
     res.status(200).send({ userId: user._id, message: "Login Successful" });
@@ -56,7 +57,15 @@ export const loginController = async (req: Request, res: Response) => {
 // COOKIE TOKEN VALIDATION ROUTE/ ENDPOINT
 export const verifyTokenController = async (req: Request, res: Response) => {
   try {
-    // SEND USER DETAIL TO THE FRONTEND AFTER VERIFYING AUTH TOKEN STORED IN COOKIE
+    const token = req.cookies.auth_token;
+    if (!token) {
+      return res.status(401).send({ message: "Unauthorized, no token" });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY as string);
+    req.userId = (decoded as any).userId;
+
+    // Send user details to the frontend after verifying auth token stored in the cookie
     res.status(200).send({ userId: req.userId });
   } catch (error) {
     console.log("verifyTokenController ~ error:", error);
@@ -71,6 +80,9 @@ export const logoutController = async (req: Request, res: Response) => {
   try {
     res.cookie("auth_token", "", {
       expires: new Date(0), //token expires now immidiately
+      sameSite: "none",
+      secure: true,
+      httpOnly: true,
     });
     res.status(200).send({
       message: "Logout Successful",
